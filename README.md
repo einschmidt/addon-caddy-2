@@ -66,6 +66,7 @@ non_caddyfile_config:
   port: 8123
 args:
   - '--watch'
+env_vars: []
 log_level: info
 ```
 
