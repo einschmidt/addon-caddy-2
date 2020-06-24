@@ -102,6 +102,18 @@ Add one or more arguments to the list, and they will be executed every single ti
 
 **Note**: The `--config` argument is set automatically. Further information can be found in the offical [documentation](https://caddyserver.com/docs/command-line#caddy-run).
 
+### Option: `env_vars`
+
+Allows you to specify multiple environment variables. Usually used for custom binary builds. 
+
+#### Option: `env_vars.name`
+
+Defines the name of an environment variable.
+
+#### Option: `env_vars.value`
+
+Defines the value of an environment variable.
+
 ### Option: `log_level`
 
 The `log_level` option controls the level of log output by the addon and can
