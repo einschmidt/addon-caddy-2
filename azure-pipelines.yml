@@ -20,6 +20,6 @@ steps:
     docker run --rm --privileged -v ~/.docker:/root/.docker \
     homeassistant/amd64-builder --all -t "Caddy 2" \
     -r https://github.com/berichta/addon-caddy-2 --no-cache \
-    -d berichta/caddy-2-{arch} --test
+    -i berichta/caddy-2-{arch} --test
   condition: succeeded()
   displayName: Build and push caddy2 with tag :latest
