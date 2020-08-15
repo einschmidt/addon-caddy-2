@@ -6,6 +6,9 @@
 trigger:
 - master
 
+resources:
+- repo: self
+
 pool:
   vmImage: 'ubuntu-latest'
 
@@ -18,8 +21,10 @@ steps:
 
 - script: |
     docker run --rm --privileged -v ~/.docker:/root/.docker \
-    homeassistant/amd64-builder --all -t "Caddy 2" \
-    -r https://github.com/berichta/addon-caddy-2 --no-cache \
+    -v /run/docker.sock:/run/docker.sock:rw \
+    -v "$(pwd)/Caddy 2":/data \
+    homeassistant/amd64-builder --all -t /data \
+    --no-cache \
     -d berichta -i caddy-2-{arch} --test
   condition: succeeded()
   displayName: Build and push caddy2 with tag :latest
