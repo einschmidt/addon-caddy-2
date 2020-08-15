@@ -1,0 +1,25 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: sudo docker login -u $(DOCKER_USER) -p $(DOCKER_PASSWORD)
+  displayName: Login to Docker Hub
+
+- script: sudo docker pull homeassistant/amd64-builder
+  displayName: Install hassio builder
+
+- script: |
+    docker run --rm --privileged -v ~/.docker:/root/.docker \
+    homeassistant/amd64-builder --all -t "Caddy 2" \
+    -r https://github.com/berichta/addon-caddy-2 --no-cache \
+    -d berichta/caddy-2-{arch} --test
+  condition: succeeded()
+  displayName: Build and push caddy2 with tag :latest
