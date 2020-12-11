@@ -16,7 +16,7 @@ RUN set -eux; \
     ;
 
 # https://github.com/caddyserver/caddy/releases
-ENV CADDY_VERSION 2.2.1
+ENV CADDY_VERSION 2.3.0-beta.1
 
 # Install Caddy
 RUN set -eux; \
@@ -48,13 +48,13 @@ LABEL \
     io.hass.arch="${BUILD_ARCH}" \
     io.hass.type="addon" \
     io.hass.version=${BUILD_VERSION} \
-    maintainer="Berichta" \
-    org.label-schema.description="Caddy 2 add-on by Berichta" \
+    maintainer="Einschmidt" \
+    org.label-schema.description="Caddy 2 add-on by Einschmidt" \
     org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.name="Caddy 2" \
     org.label-schema.schema-version="1.0" \
-    org.label-schema.url="https://github.com/berichta/hassio-addons" \
-    org.label-schema.usage="https://github.com/berichta/hassio-addons/blob/master/Caddy%202/README.md" \
+    org.label-schema.url="https://github.com/einschmidt/hassio-addons" \
+    org.label-schema.usage="https://github.com/einschmidt/hassio-addons/blob/master/Caddy%202/README.md" \
     org.label-schema.vcs-ref=${BUILD_REF} \
-    org.label-schema.vcs-url="https://github.com/berichta/hassio-addons" \
-    org.label-schema.vendor="Berichta"
+    org.label-schema.vcs-url="https://github.com/einschmidt/hassio-addons" \
+    org.label-schema.vendor="Einschmidt"
