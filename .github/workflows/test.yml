@@ -43,5 +43,5 @@ jobs:
             --all \
             --target "/data/Caddy 2" \
             --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
-            --image commafeed-{arch} \
+            --image caddy-2-{arch} \
             --version edge
