@@ -19,6 +19,8 @@ jobs:
     name: Generate version
     runs-on: ubuntu-latest
     
+    outputs:
+      version: edge
     steps:
       - name: Set version
         id: version
@@ -35,7 +37,7 @@ jobs:
     
     steps:
       - run: |
-          echo "Version: ${jobs.version.steps.version.outputs.version}"
+          echo "Version: ${needs.version.outputs.version}"
       - uses: actions/checkout@v2
         with:
           repository: einschmidt/hassio-addons-dev
@@ -43,7 +45,7 @@ jobs:
       - name: Update json
         run: |
           cd caddy-2
-          jq '.version = "${{ steps.version.outputs.version }}"' config.json > tmp.$$.json && mv tmp.$$.json config.json
+          jq '.version = "${{ needs.version.outputs.version }}"' config.json > tmp.$$.json && mv tmp.$$.json config.json
       - name: Push version
         run: |
           ls
