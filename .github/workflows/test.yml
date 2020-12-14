@@ -5,62 +5,78 @@ name: 'Test'
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-  #push:
-  #  branches: [ master ]
-  pull_request:
-    branches: [ master ]
+#   push:
+#     branches: [ master ]
+#   pull_request:
+#     branches: [ master ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # Name of the job
-    name: Test build
-    # The type of runner that the job will run on
+  version:
+    name: Generate version
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      
-      # Login to DockerHub
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Set version
+        id: version
+        run: |
+          version=$(date --utc '+%Y-%m-%d-%H:%M')
+          echo "Version: ${version}
+          echo "::set-output name=version::${version}"
 
-      # Test build
-      - name: Test build
-        uses: home-assistant/builder@master
+  # This workflow generates and updates the version
+  repository:
+    name: Update repository
+    needs: version
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
         with:
-          args: |
-            --no-latest \
-            --all \
-            --target "/data/Caddy 2" \
-            --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
-            --image caddy-2-{arch} \
-            --version edge
-  
-  # This workflow updates the dev version number
-#   update:
+          repository: einschmidt/hassio-addons-dev
+      - name: Update json
+        run: |
+          cd hassio-addons-dev/caddy-2
+          jq '.version = "${{ steps.version.outputs.version }}"' config.json > tmp.$$.json && mv tmp.$$.json config.json
+      - name: Push version
+        run: |
+          cd hassio-addons-dev/caddy-2
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add config.json
+          git commit -m "New version"
+          git push
+          
+  # This workflow contains a single job called "build"
+#   build:
 #     # Name of the job
-#     name: Update dev version
+#     name: Test build and push edge
 #     # The type of runner that the job will run on
 #     runs-on: ubuntu-latest
-    
+
 #     # Steps represent a sequence of tasks that will be executed as part of the job
 #     steps:
 #       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
 #       - uses: actions/checkout@v2
+      
+#       # Login to DockerHub
+#       - name: Login to DockerHub
+#         uses: docker/login-action@v1
 #         with:
-#           repository: einschmidt/hassio-addons-dev
-#       - uses: jossef/action-set-json-field@v1
+#           username: ${{ secrets.DOCKERHUB_USERNAME }}
+#           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+#       # Test build
+#       - name: Test build
+#         uses: home-assistant/builder@master
 #         with:
-#           file: ./caddy-2/config.json
-#           field: version
-#           value: ${{ github.job }}
+#           args: |
+#             --no-latest \
+#             --all \
+#             --target "/data/Caddy 2" \
+#             --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
+#             --image caddy-2-{arch} \
+#             --version edge
