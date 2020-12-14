@@ -24,7 +24,7 @@ jobs:
         id: version
         run: |
           version=$(date --utc '+%Y-%m-%d-%H:%M')
-          echo "Version: ${version}
+          echo "Version: ${version}"
           echo "::set-output name=version::${version}"
 
   # This workflow generates and updates the version
