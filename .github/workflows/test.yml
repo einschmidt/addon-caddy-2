@@ -34,17 +34,17 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - run: |
+          echo "Version: ${{ steps.version.outputs.version }}"
       - uses: actions/checkout@v2
         with:
           repository: einschmidt/hassio-addons-dev
-      - run: ls
       - name: Update json
         run: |
           cd caddy-2
           jq '.version = "${{ steps.version.outputs.version }}"' config.json > tmp.$$.json && mv tmp.$$.json config.json
       - name: Push version
         run: |
-          cd hassio-addons-dev/caddy-2
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add config.json
