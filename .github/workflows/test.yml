@@ -37,9 +37,10 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: einschmidt/hassio-addons-dev
+      - run: ls
       - name: Update json
         run: |
-          cd hassio-addons-dev/caddy-2
+          cd caddy-2
           jq '.version = "${{ steps.version.outputs.version }}"' config.json > tmp.$$.json && mv tmp.$$.json config.json
       - name: Push version
         run: |
