@@ -37,7 +37,7 @@ jobs:
     
     steps:
       - run: |
-          echo "Version: ${needs.version.outputs.version}"
+          echo Version: ${{ needs.version.outputs.version }}
       - uses: actions/checkout@v2
         with:
           repository: einschmidt/hassio-addons-dev
