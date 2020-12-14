@@ -35,10 +35,11 @@ jobs:
     
     steps:
       - run: |
-          echo "Version: ${{ steps.version.outputs.version }}"
+          echo "Version: ${jobs.version.steps.version.outputs.version}"
       - uses: actions/checkout@v2
         with:
           repository: einschmidt/hassio-addons-dev
+          token: ${{ MY_GITHUB_TOKEN }}
       - name: Update json
         run: |
           cd caddy-2
