@@ -45,6 +45,8 @@ jobs:
           jq '.version = "${{ steps.version.outputs.version }}"' config.json > tmp.$$.json && mv tmp.$$.json config.json
       - name: Push version
         run: |
+          ls
+          cd caddy-2
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add config.json
