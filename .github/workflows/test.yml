@@ -45,7 +45,7 @@ jobs:
       - name: Update json
         run: |
           cd caddy-2
-          jq '.version = "${{ needs.version.outputs.version }}"' config.json > tmp.$$.json && mv tmp.$$.json config.json
+          jq '.version |= "${{ needs.version.outputs.version }}"' config.json > tmp.$$.json && mv tmp.$$.json config.json
       - name: Push version
         run: |
           ls
