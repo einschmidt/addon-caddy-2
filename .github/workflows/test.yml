@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     
     outputs:
-      version: edge
+      version: ${{ steps.version.outputs.version }}
     steps:
       - name: Set version
         id: version
