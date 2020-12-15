@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: 'Test'
+name: 'Build Dev'
 
 # Controls when the action will run. 
 on:
@@ -30,7 +30,7 @@ jobs:
           echo "::set-output name=version::${version}"
 
   build:
-    name: Test build and push edge
+    name: Build dev and push to Docker
     needs: version
     runs-on: ubuntu-latest
 
@@ -56,7 +56,7 @@ jobs:
 
   # This workflow generates and updates the version
   repository:
-    name: Update repository
+    name: Update Dev repository
     needs: 
       - version
       - build
