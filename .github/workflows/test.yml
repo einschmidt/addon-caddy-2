@@ -29,32 +29,6 @@ jobs:
           echo "Version: ${version}"
           echo "::set-output name=version::${version}"
 
-  # This workflow generates and updates the version
-  repository:
-    name: Update repository
-    needs: version
-    runs-on: ubuntu-latest
-    
-    steps:
-      - run: |
-          echo Version: ${{ needs.version.outputs.version }}
-      - uses: actions/checkout@v2
-        with:
-          repository: einschmidt/hassio-addons-dev
-          token: ${{ secrets.MY_GITHUB_TOKEN }}
-      - name: Update json
-        run: |
-          cd caddy-2
-          jq '.version |= "${{ needs.version.outputs.version }}"' config.json > tmp.$$.json && mv tmp.$$.json config.json
-      - name: Push version
-        run: |
-          cd caddy-2
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add config.json
-          git commit -m "New version"
-          git push
-          
   build:
     name: Test build and push edge
     needs: version
@@ -79,3 +53,31 @@ jobs:
             --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
             --image caddy-2-{arch} \
             --version ${{ needs.version.outputs.version }}
+
+  # This workflow generates and updates the version
+  repository:
+    name: Update repository
+    needs: 
+      - version
+      - build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - run: |
+          echo Version: ${{ needs.version.outputs.version }}
+      - uses: actions/checkout@v2
+        with:
+          repository: einschmidt/hassio-addons-dev
+          token: ${{ secrets.MY_GITHUB_TOKEN }}
+      - name: Update json
+        run: |
+          cd caddy-2
+          jq '.version |= "${{ needs.version.outputs.version }}"' config.json > tmp.$$.json && mv tmp.$$.json config.json
+      - name: Push version
+        run: |
+          cd caddy-2
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add config.json
+          git commit -m "New version"
+          git push
