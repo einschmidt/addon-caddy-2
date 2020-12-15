@@ -1,0 +1,66 @@
+name: 'Build Release'
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+env:
+  GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+
+jobs:
+
+  build:
+    name: Build release and push to Docker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Gets latest created release info
+        id: latest_release_info
+        uses: jossef/action-latest-release-info@v1.1.0
+      - run: |
+          echo Release tag: ${{ steps.latest_release_info.outputs.tag_name }}
+      - uses: actions/checkout@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push
+        uses: home-assistant/builder@master
+        with:
+          args: |
+            --all \
+            --target "/data/Caddy 2" \
+            --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
+            --image caddy-2-{arch} \
+            --version ${{ steps.latest_release_info.outputs.tag_name }}
+
+  repository:
+    name: Update repository
+    needs: 
+      - build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Gets latest created release info
+        id: latest_release_info
+        uses: jossef/action-latest-release-info@v1.1.0
+      - run: |
+          echo Release tag: ${{ steps.latest_release_info.outputs.tag_name }}
+      - uses: actions/checkout@v2
+        with:
+          repository: einschmidt/hassio-addons
+          token: ${{ secrets.MY_GITHUB_TOKEN }}
+      - name: Update json
+        run: |
+          cd "Caddy 2"
+          jq '.version |= "${{ needs.version.outputs.version }}"' config.json > tmp.$$.json && mv tmp.$$.json config.json
+      - name: Push version
+        run: |
+          cd "Caddy 2"
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add config.json
+          git commit -m "New version"
+          git push
