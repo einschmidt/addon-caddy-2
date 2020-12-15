@@ -16,7 +16,7 @@ RUN set -eux; \
     ;
 
 # https://github.com/caddyserver/caddy/releases
-ENV CADDY_VERSION 2.3.0-beta.1
+ENV CADDY_VERSION 2.3.0-rc.1
 
 # Install Caddy
 RUN set -eux; \
