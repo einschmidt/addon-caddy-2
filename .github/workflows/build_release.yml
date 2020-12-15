@@ -55,7 +55,7 @@ jobs:
       - name: Update json
         run: |
           cd "Caddy 2"
-          jq '.version |= "${{ needs.version.outputs.version }}"' config.json > tmp.$$.json && mv tmp.$$.json config.json
+          jq '.version |= "${{ steps.latest_release_info.outputs.tag_name }}"' config.json > tmp.$$.json && mv tmp.$$.json config.json
       - name: Push version
         run: |
           cd "Caddy 2"
