@@ -71,11 +71,7 @@ Example add-on configurations:
   ```
 - ```yaml
   config_path: /config/caddy/Caddyfile
-  non_caddyfile_config:
-    email: your@email.com
-    domain: yourdomain.com
-    destination: localhost
-    port: 8123
+  non_caddyfile_config: {}
   args: []
   env_vars: []
   log_level: info
