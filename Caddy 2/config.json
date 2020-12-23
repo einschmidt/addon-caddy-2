@@ -9,7 +9,7 @@
     "boot": "auto",
     "hassio_api": true,
     "hassio_role": "default",
-    "map": ["share", "ssl:rw"],
+    "map": ["share", "config", "ssl:rw"],
     "host_network": true,
     "options": {
         "non_caddyfile_config": {
@@ -29,6 +29,8 @@
             "destination": "str",
             "port": "int"
         },
+        "config_path": "str?",
+        "custom_binary_path": "str?",
         "args": ["str"],
         "env_vars": [
             {
