@@ -28,12 +28,14 @@ main() {
         export "${name}=${value}"
     done
 
-    # Check for custom Caddy binary
+    # Check for custom Caddy binary path config
     if bashio::config.has_value 'custom_binary_path'; then
         CADDY_PATH="$(bashio::config 'custom_binary_path')"
     else
         CADDY_PATH=/share/caddy/caddy
     fi
+    
+    # Check for custom Caddy binary at Caddy path
     if bashio::fs.file_exists "${CADDY_PATH}"; then
         bashio::log.info "Found custom Caddy at ${CADDY_PATH}"
     else
@@ -42,12 +44,14 @@ main() {
     fi
     "${CADDY_PATH}" version
     
-    # Check for existing Caddyfile
+    # Check for config path config
     if bashio::config.has_value 'config_path'; then
         CONFIG_PATH="$(bashio::config 'config_path')"
     else
         CONFIG_PATH=/share/caddy/Caddyfile
     fi
+    
+    # Check for existing Caddyfile
     if bashio::fs.file_exists "${CONFIG_PATH}"; then
         bashio::log.info "Caddyfile found at ${CONFIG_PATH}"
     else
