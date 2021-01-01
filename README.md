@@ -11,9 +11,10 @@ Caddy simplifies your infrastructure. It takes care of TLS certificate renewals,
 - **Dynamic configuration** with the [JSON API](https://caddyserver.com/api)
 - [**Config adapters**](https://caddyserver.com/docs/config-adapters) if you don't like JSON
 - **Automatic HTTPS** by default
-	- [Let's Encrypt](https://letsencrypt.org) for public sites
+	- [ZeroSSL](https://zerossl.com) and [Let's Encrypt](https://letsencrypt.org) for public names
 	- Fully-managed local CA for internal names & IPs
 	- Can coordinate with other Caddy instances in a cluster
+	- Multi-issuer fallback
 
 # About
 
@@ -23,7 +24,7 @@ This unofficial add-on provides an easy way to add [Caddy 2](https://caddyserver
 
 Add this repository to your [Hass.io](https://home-assistant.io/hassio/) instance:
 
-`https://github.com/berichta/hassio-addons`
+`https://github.com/einschmidt/hassio-addons`
 
 If you have trouble you can follow the [official docs](https://home-assistant.io/hassio/installing_third_party_addons/).
 
