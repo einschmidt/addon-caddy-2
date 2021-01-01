@@ -24,10 +24,10 @@
     },
     "schema": {
         "non_caddyfile_config": {
-            "email": "str?",
+            "email": "email?",
             "domain": "str?",
             "destination": "str?",
-            "port": "int?"
+            "port": "port?"
         },
         "config_path": "str?",
         "custom_binary_path": "str?",
