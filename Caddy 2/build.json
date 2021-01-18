@@ -1,10 +1,10 @@
 {
     "squash": false,
     "build_from": {
-        "amd64": "hassioaddons/base:amd64-8.0.6",
-        "armhf": "hassioaddons/base:armhf-8.0.6",
-        "armv7": "hassioaddons/base:armv7-8.0.6",
-        "aarch64": "hassioaddons/base:aarch64-8.0.6"
+        "amd64": "ghcr.io/hassio-addons/base/amd64:9.0.0",
+        "armhf": "ghcr.io/hassio-addons/base/armhf:9.0.0",
+        "armv7": "ghcr.io/hassio-addons/base/armv7:9.0.0",
+        "aarch64": "ghcr.io/hassio-addons/base/aarch64:9.0.0"
     },
     "args": {}
   }
