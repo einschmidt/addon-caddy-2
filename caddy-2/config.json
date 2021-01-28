@@ -6,7 +6,6 @@
     "url": "https://github.com/einschmidt/hassio-addons/tree/master/Caddy%202",
     "arch": ["armhf", "armv7", "amd64", "aarch64"],
     "startup": "services",
-    "boot": "auto",
     "map": ["share", "config", "ssl:rw"],
     "host_network": true,
     "options": {
