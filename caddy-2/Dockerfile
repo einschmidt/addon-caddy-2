@@ -21,7 +21,7 @@ RUN set -eux; \
 		armhf)   BINARCH='armv6' ;; \
 		armv7)   BINARCH='armv7' ;; \
 		aarch64) BINARCH='arm64' ;; \
-		*) echo >&2 "error: unsupported architecture ($apkArch)"; exit 1 ;;\
+		*) echo >&2 "error: unsupported architecture ($APKARCH)"; exit 1 ;;\
 	esac; \
     curl -J -L -o /tmp/caddy.tar.gz "https://github.com/caddyserver/caddy/releases/download/v${CADDY_VERSION}/caddy_${CADDY_VERSION}_linux_${BINARCH}.tar.gz"; \
 	tar zxvf /tmp/caddy.tar.gz -C /usr/bin caddy; \
