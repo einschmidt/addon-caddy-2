@@ -1,14 +1,9 @@
 ARG BUILD_FROM
+# hadolint ignore=DL3006
 FROM $BUILD_FROM
 
 # Copy root filesystem
 COPY rootfs /
-
-# Build arguments
-ARG BUILD_ARCH
-ARG BUILD_DATE
-ARG BUILD_REF
-ARG BUILD_VERSION
 
 RUN set -eux; \
 	mkdir -p \
@@ -41,20 +36,31 @@ EXPOSE 80
 EXPOSE 443
 EXPOSE 2019
 
+# Build arguments
+ARG BUILD_ARCH
+ARG BUILD_DATE
+ARG BUILD_DESCRIPTION
+ARG BUILD_NAME
+ARG BUILD_REF
+ARG BUILD_REPOSITORY
+ARG BUILD_VERSION
+
 # Labels
 LABEL \
-    io.hass.name="Caddy 2" \
-    io.hass.description="Caddy 2 web server" \
+    io.hass.name="${BUILD_NAME}" \
+    io.hass.description="${BUILD_DESCRIPTION}" \
     io.hass.arch="${BUILD_ARCH}" \
     io.hass.type="addon" \
     io.hass.version=${BUILD_VERSION} \
     maintainer="Einschmidt" \
-    org.label-schema.description="Caddy 2 add-on by Einschmidt" \
-    org.label-schema.build-date=${BUILD_DATE} \
-    org.label-schema.name="Caddy 2" \
-    org.label-schema.schema-version="1.0" \
-    org.label-schema.url="https://github.com/einschmidt/hassio-addons" \
-    org.label-schema.usage="https://github.com/einschmidt/hassio-addons/blob/master/Caddy%202/README.md" \
-    org.label-schema.vcs-ref=${BUILD_REF} \
-    org.label-schema.vcs-url="https://github.com/einschmidt/hassio-addons" \
-    org.label-schema.vendor="Einschmidt"
+    org.opencontainers.image.title="${BUILD_NAME}" \
+    org.opencontainers.image.description="${BUILD_DESCRIPTION}" \
+    org.opencontainers.image.vendor="Einschmidt" \
+    org.opencontainers.image.authors="einschmidt" \
+    org.opencontainers.image.licenses="MIT" \
+    org.opencontainers.image.url="https://google.com" \
+    org.opencontainers.image.source="https://github.com/${BUILD_REPOSITORY}" \
+    org.opencontainers.image.documentation="https://github.com/${BUILD_REPOSITORY}/blob/main/README.md" \
+    org.opencontainers.image.created=${BUILD_DATE} \
+    org.opencontainers.image.revision=${BUILD_REF} \
+    org.opencontainers.image.version=${BUILD_VERSION}
