@@ -7,10 +7,15 @@
 non_caddyfile_config() {
     bashio::log.trace "${FUNCNAME[0]}"
 
-    export EMAIL=$(bashio::config 'non_caddyfile_config.email')
-    export DOMAIN=$(bashio::config 'non_caddyfile_config.domain')
-    export DESTINATION=$(bashio::config 'non_caddyfile_config.destination')
-    export PORT=$(bashio::config 'non_caddyfile_config.port')
+    EMAIL=$(bashio::config 'non_caddyfile_config.email')
+    DOMAIN=$(bashio::config 'non_caddyfile_config.domain')
+    DESTINATION=$(bashio::config 'non_caddyfile_config.destination')
+    PORT=$(bashio::config 'non_caddyfile_config.port')
+    
+    export EMAIL
+    export DOMAIN
+    export DESTINATION
+    export PORT
 }
 
 main() {
@@ -62,6 +67,6 @@ main() {
     fi
 
     # Run Caddy
-    "${CADDY_PATH}" run --config "${CONFIG_PATH}" ${ARGS}
+    "${CADDY_PATH}" run --config "${CONFIG_PATH}" "${ARGS}"
 }
 main "$@"
