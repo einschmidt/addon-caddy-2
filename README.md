@@ -6,15 +6,16 @@
 Caddy simplifies your infrastructure. It takes care of TLS certificate renewals, OCSP stapling, static file serving, reverse proxying, Kubernetes ingress, and more.
 
 **Features**
+
 - **Easy configuration** with the [Caddyfile](https://caddyserver.com/docs/caddyfile)
 - **Powerful configuration** with its [native JSON config](https://caddyserver.com/docs/json/)
 - **Dynamic configuration** with the [JSON API](https://caddyserver.com/api)
 - [**Config adapters**](https://caddyserver.com/docs/config-adapters) if you don't like JSON
 - **Automatic HTTPS** by default
-	- [ZeroSSL](https://zerossl.com) and [Let's Encrypt](https://letsencrypt.org) for public names
-	- Fully-managed local CA for internal names & IPs
-	- Can coordinate with other Caddy instances in a cluster
-	- Multi-issuer fallback
+  - [ZeroSSL](https://zerossl.com) and [Let's Encrypt](https://letsencrypt.org) for public names
+  - Fully-managed local CA for internal names & IPs
+  - Can coordinate with other Caddy instances in a cluster
+  - Multi-issuer fallback
 
 # About
 
@@ -43,6 +44,7 @@ Using the [SSH](https://home-assistant.io/addons/ssh/) or [Samba](https://home-a
 # Caddyfile example
 
 A very simple Caddyfile for serving a default Home Assistant installation could look like this. Further information can be found [here](https://caddyserver.com/docs/caddyfile).
+
 ```
 {
 	email your@email.com
@@ -66,7 +68,7 @@ Example add-on configurations:
     destination: localhost
     port: 8123
   args:
-    - '--watch'
+    - "--watch"
   env_vars: []
   log_level: info
   ```
@@ -123,6 +125,7 @@ Add one or more arguments to the list, and they will be executed every single ti
 
 Allows you to specify multiple environment variables. Usually used for custom binary builds.
 env_vars example:
+
 ```
 ...
 env_vars:
@@ -151,7 +154,7 @@ dealing with an unknown issue. Possible values are:
 - `debug`: Shows detailed debug information.
 - `info`: Normal (usually) interesting events.
 - `warning`: Exceptional occurrences that are not errors.
-- `error`:  Runtime errors that do not require immediate action.
+- `error`: Runtime errors that do not require immediate action.
 - `fatal`: Something went terribly wrong. Add-on becomes unusable.
 
 Please note that each level automatically includes log messages from a
@@ -162,10 +165,13 @@ you are troubleshooting.
 # Updates/Plugins
 
 ## Explanation
+
 This add-on uses single binary files for launching Caddy, which makes it easy to run a custom Caddy build with whatever version and plugins you want.
 
 ## Custom Caddy binaries
+
 You can build your own version of Caddy like described [here](https://caddyserver.com/docs/build#xcaddy).
 
 ## Install
+
 To use a custom binary, place the `caddy` file at `/share/caddy/caddy` or point to it with `custom_binary_path`. Restart the add-on to start using the custom version.
