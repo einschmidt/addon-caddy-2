@@ -36,11 +36,11 @@ Further information can be found [here](https://caddyserver.com/docs/caddyfile).
 
 ```
 {
-	email your@email.com
+  email your@email.com
 }
 
 yourdomain.com {
-	reverse_proxy localhost:8123
+  reverse_proxy localhost:8123
 }
 ```
 
@@ -53,10 +53,10 @@ without Caddyfile:
 
 ```yaml
 non_caddyfile_config:
-	email: your@email.com
-	domain: yourdomain.com
-	destination: localhost
-	port: 8123
+  email: your@email.com
+  domain: yourdomain.com
+  destination: localhost
+  port: 8123
 args: []
 env_vars: []
 log_level: info
@@ -68,7 +68,7 @@ Example configuration using and watching a Caddyfile located at a custom path:
 config_path: /config/caddy/Caddyfile
 non_caddyfile_config: {}
 args:
-	- "--watch"
+  - "--watch"
 env_vars: []
 log_level: info
 ```
@@ -122,10 +122,10 @@ env_vars example:
 ```
 ...
 env_vars:
-	- name: NAMECHEAP_API_USER
-		value: xxxx
-	- name: NAMECHEAP_API_KEY
-		value: xxx
+  - name: NAMECHEAP_API_USER
+    value: xxxx
+  - name: NAMECHEAP_API_KEY
+    value: xxx
 ...
 ```
 
