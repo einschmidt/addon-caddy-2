@@ -2,9 +2,6 @@ ARG BUILD_FROM
 # hadolint ignore=DL3006
 FROM $BUILD_FROM
 
-# Copy root filesystem
-COPY rootfs /
-
 RUN set -eux; \
 	mkdir -p \
 		/data/caddy \
@@ -28,6 +25,9 @@ RUN set -eux; \
 	chmod +x /usr/bin/caddy; \
 	rm -rf /tmp/caddy; \
 	caddy version
+
+# Copy root filesystem
+COPY rootfs /
 
 ENV XDG_CONFIG_HOME=/data
 ENV XDG_DATA_HOME=/ssl
