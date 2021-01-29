@@ -14,13 +14,17 @@ Then install the "Caddy 2" add-on.
 
 ## Default Proxy Server setup
 
-While Caddy 2 isn't provided with a Caddyfile, the addon will run as a proxy server for Home Assistant, using provided information from the add-on config, including automatic HTTPS.
+While Caddy 2 isn't provided with a Caddyfile, the addon will run as a proxy server for Home Assistant, using
+provided information from the add-on config, including automatic HTTPS.
 
 **Note**: As soon as Caddy 2 finds a `Caddyfile`, the `non_caddyfile_config` settings will be ignored in favour of the Caddyfile.
 
 ## Caddyfile setup
 
-Using the [SSH](https://home-assistant.io/addons/ssh/) or [Samba](https://home-assistant.io/addons/samba/) add-ons, create the `/share/caddy` folder and place a Caddyfile at `/share/caddy/Caddyfile` (no extension), or specify the location of your Caddyfile using `config_path`. There's also access to the `/ssl` folder if you want to use certificates from another add-on, or use this add-on to create certificates for other add-ons. Finally, this add-on uses Host networking so you can listen on any ports you need.
+Using the [SSH][SSH] or [Samba][Samba] add-ons, create the `/share/caddy` folder and place a Caddyfile 
+at `/share/caddy/Caddyfile` (no extension), or specify the location of your Caddyfile using `config_path`.
+There's also access to the `/ssl` folder if you want to use certificates from another add-on, or use this add-on
+to create certificates for other add-ons. Finally, this add-on uses Host networking so you can listen on any ports you need.
 
 ## Caddyfile example
 
@@ -28,11 +32,11 @@ A very simple Caddyfile for serving a default Home Assistant installation could 
 
 ```
 {
-	email your@email.com
+  email your@email.com
 }
 
 yourdomain.com {
-	reverse_proxy localhost:8123
+  reverse_proxy localhost:8123
 }
 ```
 
@@ -44,10 +48,10 @@ Example configuration for proxy forwarding yourdomain.com to Home Assistant with
 
 ```yaml
 non_caddyfile_config:
-	email: your@email.com
-	domain: yourdomain.com
-	destination: localhost
-	port: 8123
+  email: your@email.com
+  domain: yourdomain.com
+  destination: localhost
+  port: 8123
 args: []
 env_vars: []
 log_level: info
@@ -59,7 +63,7 @@ Example configuration using and watching a Caddyfile located at a custom path:
 config_path: /config/caddy/Caddyfile
 non_caddyfile_config: {}
 args:
-	- "--watch"
+  - "--watch"
 env_vars: []
 log_level: info
 ```
@@ -159,3 +163,6 @@ You can build your own version of Caddy like described [here](https://caddyserve
 ### Install
 
 To use a custom binary, place the `caddy` file at `/share/caddy/caddy` or point to it with `custom_binary_path`. Restart the add-on to start using the custom version.
+
+[SSH]: https://home-assistant.io/addons/ssh/
+[Samba]: https://home-assistant.io/addons/samba/
