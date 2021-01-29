@@ -18,8 +18,8 @@ While Caddy 2 isn't provided with a Caddyfile, the addon will run as a proxy
 server for Home Assistant, using provided information from the add-on config,
 including automatic HTTPS.
 
-**Note**: As soon as Caddy 2 finds a `Caddyfile`, the `non_caddyfile_config` settings will be ignored
-in favour of the Caddyfile.
+**Note**: As soon as Caddy 2 finds a `Caddyfile`, the `non_caddyfile_config`
+settings will be ignored in favour of the Caddyfile.
 
 ## Caddyfile setup
 
@@ -33,7 +33,8 @@ on any ports you need.
 
 ## Caddyfile example
 
-A very simple Caddyfile for serving a default Home Assistant installation could look like this.
+A very simple Caddyfile for serving a default Home Assistant installation
+could look like this.
 Further information can be found [here](https://caddyserver.com/docs/caddyfile).
 
 ```
@@ -82,7 +83,8 @@ log_level: info
 Email is your email address. Mainly used when creating an ACME account with your
 CA, and is highly recommended in case there are problems with your certificates.
 
-**Note**: This option will be used only for the default reverse proxy config, which applies when Caddy doesn't find any `Caddyfile` at `config_path`.
+**Note**: This option will be used only for the default reverse proxy config,
+which applies when Caddy doesn't find any `Caddyfile` at `config_path`.
 
 ### Option: `non_caddyfile_config.domain`
 
@@ -93,7 +95,8 @@ which applies when Caddy doesn't find any `Caddyfile` at `config_path`.
 
 ### Option: `non_caddyfile_config.destination`
 
-Defines the upstream address for the reverse proxy. For most cases, `localhost` should be fine.
+Defines the upstream address for the reverse proxy.
+For most cases, `localhost` should be fine.
 
 **Note**: This option will be used only for the default reverse proxy config,
 which applies when Caddy doesn't find any `Caddyfile` at `config_path`.
@@ -107,22 +110,28 @@ which applies when Caddy doesn't find any `Caddyfile` at `config_path`.
 
 ### Option: `config_path`
 
-Allows you to specify the path to your Caddyfile. Defaults to `/share/caddy/Caddyfile` if not specified.
+Allows you to specify the path to your Caddyfile.
+Defaults to `/share/caddy/Caddyfile` if not specified.
 
 ### Option: `custom_binary_path`
 
-Allows you to specify the path to a custom `caddy` binary. Defaults to `/share/caddy/caddy` if not specified.
+Allows you to specify the path to a custom `caddy` binary.
+Defaults to `/share/caddy/caddy` if not specified.
 
 ### Option: `args`
 
 Allows you to specify additional Caddy 2 command line arguments.
-Add one or more arguments to the list, and they will be executed every single time this add-on starts.
+Add one or more arguments to the list, and they will be executed
+every single time this add-on starts.
 
-**Note**: The `--config` argument is set automatically. Further information can be found in the offical [documentation](https://caddyserver.com/docs/command-line#caddy-run).
+**Note**: The `--config` argument is set automatically.
+Further information can be found in the offical [documentation](https://caddyserver.com/docs/command-line#caddy-run).
 
 ### Option: `env_vars`
 
-Allows you to specify multiple environment variables. Usually used for custom binary builds.
+Allows you to specify multiple environment variables.
+Usually used for custom binary builds.
+
 env_vars example:
 
 ```
@@ -165,7 +174,9 @@ you are troubleshooting.
 
 ### Explanation
 
-This add-on uses single binary files for launching Caddy, which makes it easy to run a custom Caddy build with whatever version and plugins you want.
+This add-on uses single binary files for launching Caddy,
+which makes it easy to run a custom Caddy build with whatever
+version and plugins you want.
 
 ### Custom Caddy binaries
 
