@@ -41,6 +41,7 @@ yourdomain.com {
 **Note**: _Remember to restart the add-on when the configuration is changed._
 
 Example configuration for proxy forwarding yourdomain.com to Home Assistant without Caddyfile:
+
 ```yaml
 non_caddyfile_config:
 	email: your@email.com
@@ -53,6 +54,7 @@ log_level: info
 ```
 
 Example configuration using and watching a Caddyfile located at a custom path:
+
 ```yaml
 config_path: /config/caddy/Caddyfile
 non_caddyfile_config: {}
