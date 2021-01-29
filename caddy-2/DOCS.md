@@ -21,7 +21,7 @@ provided information from the add-on config, including automatic HTTPS.
 
 ## Caddyfile setup
 
-Using the [SSH][SSH] or [Samba][Samba] add-ons, create the `/share/caddy` folder and place a Caddyfile 
+Using the [SSH][ssh] or [Samba][samba] add-ons, create the `/share/caddy` folder and place a Caddyfile
 at `/share/caddy/Caddyfile` (no extension), or specify the location of your Caddyfile using `config_path`.
 There's also access to the `/ssl` folder if you want to use certificates from another add-on, or use this add-on
 to create certificates for other add-ons. Finally, this add-on uses Host networking so you can listen on any ports you need.
@@ -164,5 +164,5 @@ You can build your own version of Caddy like described [here](https://caddyserve
 
 To use a custom binary, place the `caddy` file at `/share/caddy/caddy` or point to it with `custom_binary_path`. Restart the add-on to start using the custom version.
 
-[SSH]: https://home-assistant.io/addons/ssh/
-[Samba]: https://home-assistant.io/addons/samba/
+[ssh]: https://home-assistant.io/addons/ssh/
+[samba]: https://home-assistant.io/addons/samba/
