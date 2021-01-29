@@ -14,8 +14,8 @@ Then install the "Caddy 2" add-on.
 
 ## Default Proxy Server setup
 
-While Caddy 2 isn't provided with a Caddyfile, the addon will run as a proxy server for Home Assistant,
-using provided information from the add-on config, including automatic HTTPS.
+While Caddy 2 isn't provided with a Caddyfile, the addon will run as a proxy server for
+Home Assistant, using provided information from the add-on config, including automatic HTTPS.
 
 **Note**: As soon as Caddy 2 finds a `Caddyfile`, the `non_caddyfile_config` settings will be ignored
 in favour of the Caddyfile.
