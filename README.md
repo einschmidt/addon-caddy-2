@@ -1,6 +1,6 @@
 <p align="center">
-	<a href="https://caddyserver.com"><img src="https://user-images.githubusercontent.com/1128849/36338535-05fb646a-136f-11e8-987b-e6901e717d5a.png" alt="Caddy" width="450"></a></br>
-	Caddy 2 is a powerful, enterprise-ready, open source web server with automatic HTTPS written in Go
+<a href="https://caddyserver.com"><img src="https://user-images.githubusercontent.com/1128849/36338535-05fb646a-136f-11e8-987b-e6901e717d5a.png" alt="Caddy" width="450"></a></br>
+Caddy 2 is a powerful, enterprise-ready, open source web server with automatic HTTPS written in Go
 </p>
 
 Caddy simplifies your infrastructure. It takes care of TLS certificate renewals, OCSP stapling, static file serving, reverse proxying, Kubernetes ingress, and more.
@@ -12,10 +12,10 @@ Caddy simplifies your infrastructure. It takes care of TLS certificate renewals,
 - **Dynamic configuration** with the [JSON API](https://caddyserver.com/api)
 - [**Config adapters**](https://caddyserver.com/docs/config-adapters) if you don't like JSON
 - **Automatic HTTPS** by default
-  - [ZeroSSL](https://zerossl.com) and [Let's Encrypt](https://letsencrypt.org) for public names
-  - Fully-managed local CA for internal names & IPs
-  - Can coordinate with other Caddy instances in a cluster
-  - Multi-issuer fallback
+- [ZeroSSL](https://zerossl.com) and [Let's Encrypt](https://letsencrypt.org) for public names
+- Fully-managed local CA for internal names & IPs
+- Can coordinate with other Caddy instances in a cluster
+- Multi-issuer fallback
 
 # About
 
