@@ -184,7 +184,9 @@ You can build your own version of Caddy like described [here](https://caddyserve
 
 ### Install custom binary
 
-To use a custom binary, place the `caddy` file at `/share/caddy/caddy` or point to it with `custom_binary_path`. Restart the add-on to start using the custom version.
+To use a custom binary, place the `caddy` file at `/share/caddy/caddy` or
+point to it with `custom_binary_path`. Restart the add-on to start using
+the custom version.
 
 [ssh]: https://home-assistant.io/addons/ssh/
 [samba]: https://home-assistant.io/addons/samba/
