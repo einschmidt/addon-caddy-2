@@ -165,7 +165,7 @@ This add-on uses single binary files for launching Caddy, which makes it easy to
 
 You can build your own version of Caddy like described [here](https://caddyserver.com/docs/build#xcaddy).
 
-### Install
+### Install custom binary
 
 To use a custom binary, place the `caddy` file at `/share/caddy/caddy` or point to it with `custom_binary_path`. Restart the add-on to start using the custom version.
 
