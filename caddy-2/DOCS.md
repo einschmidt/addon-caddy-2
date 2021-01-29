@@ -14,19 +14,22 @@ Then install the "Caddy 2" add-on.
 
 ## Default Proxy Server setup
 
-While Caddy 2 isn't provided with a Caddyfile, the addon will run as a proxy server for Home Assistant, using provided information from the add-on config, including automatic HTTPS.
+While Caddy 2 isn't provided with a Caddyfile, the addon will run as a proxy
+server for Home Assistant, using provided information from the add-on config,
+including automatic HTTPS.
 
 **Note**: As soon as Caddy 2 finds a `Caddyfile`, the `non_caddyfile_config` settings will be ignored
 in favour of the Caddyfile.
 
 ## Caddyfile setup
 
-Using the [SSH][ssh] or [Samba][samba] add-ons, create the `/share/caddy` folder and
-place a Caddyfile at `/share/caddy/Caddyfile` (no extension), or specify the location
-of your Caddyfile using `config_path`. There's also access to the `/ssl` folder if you
-want to use certificates from another add-on, or use this add-on to create certificates
-for other add-ons. Finally, this add-on uses Host networking so you can listen on any
-ports you need.
+Using the [SSH][ssh] or [Samba][samba] add-ons, create the `/share/caddy`
+folder and place a Caddyfile at `/share/caddy/Caddyfile` (no extension),
+or specify the location of your Caddyfile using `config_path`. There's
+also access to the `/ssl` folder if you want to use certificates from
+another add-on, or use this add-on to create certificates for other
+add-ons. Finally, this add-on uses Host networking so you can listen
+on any ports you need.
 
 ## Caddyfile example
 
@@ -76,7 +79,8 @@ log_level: info
 
 ### Option: `non_caddyfile_config.email`
 
-Email is your email address. Mainly used when creating an ACME account with your CA, and is highly recommended in case there are problems with your certificates.
+Email is your email address. Mainly used when creating an ACME account with your
+CA, and is highly recommended in case there are problems with your certificates.
 
 **Note**: This option will be used only for the default reverse proxy config, which applies when Caddy doesn't find any `Caddyfile` at `config_path`.
 
@@ -84,19 +88,22 @@ Email is your email address. Mainly used when creating an ACME account with your
 
 Your domain address.
 
-**Note**: This option will be used only for the default reverse proxy config, which applies when Caddy doesn't find any `Caddyfile` at `config_path`.
+**Note**: This option will be used only for the default reverse proxy config,
+which applies when Caddy doesn't find any `Caddyfile` at `config_path`.
 
 ### Option: `non_caddyfile_config.destination`
 
 Defines the upstream address for the reverse proxy. For most cases, `localhost` should be fine.
 
-**Note**: This option will be used only for the default reverse proxy config, which applies when Caddy doesn't find any `Caddyfile` at `config_path`.
+**Note**: This option will be used only for the default reverse proxy config,
+which applies when Caddy doesn't find any `Caddyfile` at `config_path`.
 
 ### Option: `non_caddyfile_config.port`
 
 Defines the port of the upstream address.
 
-**Note**: This option will be used only for the default reverse proxy config, which applies when Caddy doesn't find any `Caddyfile` at `config_path`.
+**Note**: This option will be used only for the default reverse proxy config,
+which applies when Caddy doesn't find any `Caddyfile` at `config_path`.
 
 ### Option: `config_path`
 
