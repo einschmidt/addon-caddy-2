@@ -3,8 +3,8 @@ ARG BUILD_FROM
 FROM $BUILD_FROM
 
 RUN set -eux; \
-	mkdir -p \
-		/data/caddy \
+  mkdir -p \
+    /data/caddy \
     ;
 
 # https://github.com/caddyserver/caddy/releases
@@ -12,22 +12,26 @@ ENV CADDY_VERSION 2.3.0
 
 # Install Caddy
 RUN set -eux; \
-	APKARCH="$(apk --print-arch)"; \
-	case "$APKARCH" in \
-		x86_64)  BINARCH='amd64' ;; \
-		armhf)   BINARCH='armv6' ;; \
-		armv7)   BINARCH='armv7' ;; \
-		aarch64) BINARCH='arm64' ;; \
-		*) echo >&2 "error: unsupported architecture ($APKARCH)"; exit 1 ;;\
-	esac; \
+  APKARCH="$(apk --print-arch)"; \
+  case "$APKARCH" in \
+    x86_64)  BINARCH='amd64' ;; \
+    armhf)   BINARCH='armv6' ;; \
+    armv7)   BINARCH='armv7' ;; \
+    aarch64) BINARCH='arm64' ;; \
+    *) echo >&2 "error: unsupported architecture ($APKARCH)"; exit 1 ;;\
+  esac; \
     curl -J -L -o /tmp/caddy.tar.gz "https://github.com/caddyserver/caddy/releases/download/v${CADDY_VERSION}/caddy_${CADDY_VERSION}_linux_${BINARCH}.tar.gz"; \
-	tar zxvf /tmp/caddy.tar.gz -C /usr/bin caddy; \
-	chmod +x /usr/bin/caddy; \
-	rm -rf /tmp/caddy; \
-	caddy version
+  tar zxvf /tmp/caddy.tar.gz -C /usr/bin caddy; \
+  chmod +x /usr/bin/caddy; \
+  rm -rf /tmp/caddy; \
+  caddy version
 
 # Copy root filesystem
 COPY rootfs /
+
+# set up nsswitch.conf for Go's "netgo" implementation
+# - https://github.com/docker-library/golang/blob/1eb096131592bcbc90aa3b97471811c798a93573/1.14/alpine3.12/Dockerfile#L9
+RUN [ ! -e /etc/nsswitch.conf ] && echo 'hosts: files dns' > /etc/nsswitch.conf
 
 ENV XDG_CONFIG_HOME=/data
 ENV XDG_DATA_HOME=/ssl
