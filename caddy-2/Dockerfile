@@ -36,10 +36,6 @@ RUN [ ! -e /etc/nsswitch.conf ] && echo 'hosts: files dns' > /etc/nsswitch.conf
 ENV XDG_CONFIG_HOME=/data
 ENV XDG_DATA_HOME=/ssl
 
-EXPOSE 80
-EXPOSE 443
-EXPOSE 2019
-
 # Build arguments
 ARG BUILD_ARCH
 ARG BUILD_DATE
