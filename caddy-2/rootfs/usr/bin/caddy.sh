@@ -35,6 +35,7 @@ main() {
 
     # Check for custom Caddy binary path config
     if bashio::config.has_value 'custom_binary_path'; then
+        bashio::log.debug "Set custom Caddy binary path"
         CADDY_PATH="$(bashio::config 'custom_binary_path')"
     else
         CADDY_PATH=/share/caddy/caddy
@@ -48,9 +49,10 @@ main() {
         bashio::log.info "Use built-in Caddy"
     fi
     "${CADDY_PATH}" version
-    
+
     # Check for config path config
     if bashio::config.has_value 'config_path'; then
+        bashio::log.debug "Set custom Caddy config path"
         CONFIG_PATH="$(bashio::config 'config_path')"
     else
         CONFIG_PATH=/share/caddy/Caddyfile
@@ -66,7 +68,13 @@ main() {
         non_caddyfile_config
     fi
 
+    # Format Caddyfile
+    # bashio::log.info "Format Caddyfile"
+    # "${CADDY_PATH}" fmt "${CONFIG_PATH}"
+
     # Run Caddy
+    bashio::log.info "Run Caddy"
+    bashio::log.debug "'${CADDY_PATH}' run --config '${CONFIG_PATH}' '${ARGS}'"
     "${CADDY_PATH}" run --config "${CONFIG_PATH}" "${ARGS}"
 }
 main "$@"
