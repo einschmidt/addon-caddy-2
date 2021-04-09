@@ -26,6 +26,7 @@
       "destination": "str?",
       "port": "port?"
     },
+    "caddy_upgrade": "bool?",
     "config_path": "str?",
     "custom_binary_path": "str?",
     "args": ["str"],

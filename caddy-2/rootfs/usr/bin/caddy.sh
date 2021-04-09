@@ -18,13 +18,31 @@ prepare_caddy() {
     # Check for custom Caddy binary at Caddy path
     if bashio::fs.file_exists "${CADDY_PATH}"; then
         bashio::log.info "Found custom Caddy at ${CADDY_PATH}"
+        export CUSTOM_CADDY=true
     else
+        export CUSTOM_CADDY=false
         export CADDY_PATH="/usr/bin/caddy"
         bashio::log.info "Use built-in Caddy"
     fi
 
     # Check caddy version
     "${CADDY_PATH}" version
+}
+
+caddy_upgrade() {
+    bashio::log.info 'Upgrade Caddy...'
+
+    if ! ${CUSTOM_CADDY}; then
+        bashio::log.info "Cannot upgrade Caddy as no custom binary has been found"
+        return 0
+    fi
+
+    if [ -w ${CADDY_PATH} ]; then
+        bashio::log.info "Initiate upgrade"
+        "${CADDY_PATH}" upgrade
+    else
+        bashio::log.info "Custom Caddy has been found but is not writable"
+    fi
 }
 
 non_caddyfile_config() {
@@ -80,6 +98,11 @@ main() {
 
     # Prepare Caddy
     prepare_caddy
+
+    # Upgrade Caddy
+    if bashio::config.true 'caddy_upgrade'; then
+        caddy_upgrade
+    fi
 
     # Run Caddy
     bashio::log.info "Run Caddy"
