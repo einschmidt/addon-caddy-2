@@ -4,7 +4,5 @@
 # Runs Caddy
 # ==============================================================================
 
-bashio::log.info 'Starting Caddy...'
-
-# Run Caddy
+# Run Add-on
 exec /usr/bin/caddy.sh
