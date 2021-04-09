@@ -45,6 +45,28 @@ caddy_upgrade() {
     fi
 }
 
+prepare_caddyfile() {
+    bashio::log.info 'Prepare Caddyfile...'
+
+    # Check for config path config
+    if bashio::config.has_value 'config_path'; then
+        bashio::log.debug "Set custom Caddyfile path"
+        export CONFIG_PATH="$(bashio::config 'config_path')"
+    else
+        export CONFIG_PATH="/share/caddy/Caddyfile"
+    fi
+    
+    # Check for existing Caddyfile
+    if bashio::fs.file_exists "${CONFIG_PATH}"; then
+        bashio::log.info "Caddyfile found at ${CONFIG_PATH}"
+    else
+        bashio::log.info "No Caddyfile found"
+        bashio::log.info "Use non_caddyfile_config"
+        export CONFIG_PATH=/etc/caddy/Caddyfile
+        non_caddyfile_config
+    fi
+}
+
 non_caddyfile_config() {
     bashio::log.trace "${FUNCNAME[0]}"
 
@@ -74,24 +96,6 @@ main() {
         export "${name}=${value}"
     done
 
-    # Check for config path config
-    if bashio::config.has_value 'config_path'; then
-        bashio::log.debug "Set custom Caddy config path"
-        CONFIG_PATH="$(bashio::config 'config_path')"
-    else
-        CONFIG_PATH=/share/caddy/Caddyfile
-    fi
-    
-    # Check for existing Caddyfile
-    if bashio::fs.file_exists "${CONFIG_PATH}"; then
-        bashio::log.info "Caddyfile found at ${CONFIG_PATH}"
-    else
-        bashio::log.info "No Caddyfile found"
-        bashio::log.info "Use non_caddyfile_config"
-        CONFIG_PATH=/etc/caddy/Caddyfile
-        non_caddyfile_config
-    fi
-
     # Format Caddyfile
     # bashio::log.info "Format Caddyfile"
     # "${CADDY_PATH}" fmt "${CONFIG_PATH}"
@@ -104,8 +108,11 @@ main() {
         caddy_upgrade
     fi
 
+    # Prepare Caddyfile
+    prepare_caddyfile
+
     # Run Caddy
-    bashio::log.info "Run Caddy"
+    bashio::log.info "Run Caddy..."
     bashio::log.debug "'${CADDY_PATH}' run --config '${CONFIG_PATH}' '${ARGS}'"
     "${CADDY_PATH}" run --config "${CONFIG_PATH}" "${ARGS}"
 }
