@@ -10,9 +10,11 @@ prepare_caddy() {
     # Check for custom Caddy binary path config
     if bashio::config.has_value 'custom_binary_path'; then
         bashio::log.debug "Set custom Caddy binary path"
-        export CADDY_PATH="$(bashio::config 'custom_binary_path')"
+        CADDY_PATH="$(bashio::config 'custom_binary_path')"
+        export CADDY_PATH
     else
-        export CADDY_PATH="/share/caddy/caddy"
+        CADDY_PATH="/share/caddy/caddy"
+        export CADDY_PATH
     fi
 
     # Check for custom Caddy binary at Caddy path
@@ -51,9 +53,11 @@ prepare_caddyfile() {
     # Check for config path config
     if bashio::config.has_value 'config_path'; then
         bashio::log.debug "Set custom Caddyfile path"
-        export CONFIG_PATH="$(bashio::config 'config_path')"
+        CONFIG_PATH="$(bashio::config 'config_path')"
+        export CONFIG_PATH
     else
-        export CONFIG_PATH="/share/caddy/Caddyfile"
+        CONFIG_PATH="/share/caddy/Caddyfile"
+        export CONFIG_PATH
     fi
     
     # Check for existing Caddyfile
