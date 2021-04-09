@@ -6,7 +6,7 @@
   "url": "https://github.com/einschmidt/addon-caddy-2",
   "arch": ["armhf", "armv7", "amd64", "aarch64"],
   "startup": "services",
-  "map": ["share", "config", "ssl:rw"],
+  "map": ["share:rw", "config", "ssl:rw"],
   "host_network": true,
   "options": {
     "non_caddyfile_config": {
