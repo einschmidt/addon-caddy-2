@@ -4,6 +4,29 @@
 #
 # Launch Caddy
 # ------------------------------------------------------------------------------
+prepare_caddy() {
+    bashio::log.info 'Prepare Caddy...'
+
+    # Check for custom Caddy binary path config
+    if bashio::config.has_value 'custom_binary_path'; then
+        bashio::log.debug "Set custom Caddy binary path"
+        export CADDY_PATH="$(bashio::config 'custom_binary_path')"
+    else
+        export CADDY_PATH="/share/caddy/caddy"
+    fi
+
+    # Check for custom Caddy binary at Caddy path
+    if bashio::fs.file_exists "${CADDY_PATH}"; then
+        bashio::log.info "Found custom Caddy at ${CADDY_PATH}"
+    else
+        export CADDY_PATH="/usr/bin/caddy"
+        bashio::log.info "Use built-in Caddy"
+    fi
+
+    # Check caddy version
+    "${CADDY_PATH}" version
+}
+
 non_caddyfile_config() {
     bashio::log.trace "${FUNCNAME[0]}"
 
@@ -33,23 +56,6 @@ main() {
         export "${name}=${value}"
     done
 
-    # Check for custom Caddy binary path config
-    if bashio::config.has_value 'custom_binary_path'; then
-        bashio::log.debug "Set custom Caddy binary path"
-        CADDY_PATH="$(bashio::config 'custom_binary_path')"
-    else
-        CADDY_PATH=/share/caddy/caddy
-    fi
-    
-    # Check for custom Caddy binary at Caddy path
-    if bashio::fs.file_exists "${CADDY_PATH}"; then
-        bashio::log.info "Found custom Caddy at ${CADDY_PATH}"
-    else
-        CADDY_PATH=/usr/bin/caddy
-        bashio::log.info "Use built-in Caddy"
-    fi
-    "${CADDY_PATH}" version
-
     # Check for config path config
     if bashio::config.has_value 'config_path'; then
         bashio::log.debug "Set custom Caddy config path"
@@ -71,6 +77,9 @@ main() {
     # Format Caddyfile
     # bashio::log.info "Format Caddyfile"
     # "${CADDY_PATH}" fmt "${CONFIG_PATH}"
+
+    # Prepare Caddy
+    prepare_caddy
 
     # Run Caddy
     bashio::log.info "Run Caddy"
