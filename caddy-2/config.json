@@ -27,6 +27,7 @@
       "port": "port?"
     },
     "caddy_upgrade": "bool?",
+    "caddy_fmt": "bool?",
     "config_path": "str?",
     "custom_binary_path": "str?",
     "args": ["str"],
