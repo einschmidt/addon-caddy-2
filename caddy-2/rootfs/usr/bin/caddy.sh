@@ -59,10 +59,12 @@ prepare_caddyfile() {
     # Check for existing Caddyfile
     if bashio::fs.file_exists "${CONFIG_PATH}"; then
         bashio::log.info "Caddyfile found at ${CONFIG_PATH}"
+        export CADDYFILE=true
     else
         bashio::log.info "No Caddyfile found"
         bashio::log.info "Use non_caddyfile_config"
         export CONFIG_PATH=/etc/caddy/Caddyfile
+        export CADDYFILE=false
         non_caddyfile_config
     fi
 }
@@ -79,6 +81,27 @@ non_caddyfile_config() {
     export DOMAIN
     export DESTINATION
     export PORT
+}
+
+caddy_fmt() {
+    bashio::log.info 'Format Caddyfile...'
+
+    if ! ${CADDYFILE}; then
+        bashio::log.info "No Caddyfile found"
+        return 0
+    fi
+
+    if [ -w ${CONFIG_PATH} ]; then
+        bashio::log.info "Overwrite Caddyfile"
+        "${CADDY_PATH}" fmt ${CONFIG_PATH} --overwrite
+    else
+        bashio::log.info "Caddyfile has been found but is not writable"
+        bashio::log.info "Find the formatted output below"
+        bashio::log.info
+        bashio::log.info "= Caddyfile ========================================="
+        "${CADDY_PATH}" fmt ${CONFIG_PATH}
+        bashio::log.info "====================================================="
+    fi
 }
 
 main() {
@@ -110,6 +133,11 @@ main() {
 
     # Prepare Caddyfile
     prepare_caddyfile
+
+    # Format Caddyfile
+    if bashio::config.true 'caddy_fmt'; then
+        caddy_fmt
+    fi
 
     # Run Caddy
     bashio::log.info "Run Caddy..."
