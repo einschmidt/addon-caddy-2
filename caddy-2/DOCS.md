@@ -120,15 +120,17 @@ Defaults to `/share/caddy/caddy` if not specified.
 
 ### Option: `caddy_upgrade'
 
-Enables/Disables the function to upgrade a custom caddy binary and its plugins
-during startup. Set it to `true` to enable it, `false` otherwise.
+Upgrade a custom caddy binary and its plugins during startup. Set it to `true` 
+to enable it, `false` otherwise.
 Disabled by default.
 
-**Note**: The upgrade function applies to custom binaries only.
+**Note**: The upgrade function applies to custom binaries only. Requires a
+custom Caddy binary of version 2.4 or higher.
 
 ### Option: `caddy_fmt`
 
-Enables/Disables the function to format or prettify a Caddyfile.
+Enables/Disables the function to format or prettify a Caddyfile. Set it to 
+`true` to enable it, `false` otherwise.
 Disabled by default.
 
 **Note**: The format function requires a Caddyfile in a writable folder. In case
