@@ -117,6 +117,7 @@ main() {
 
     # Load command line arguments
     for arg in $(bashio::config 'args|keys'); do
+        # shellsheck disable=SC2207
         args+=( $(bashio::config "args[${arg}]") )
     done
 
