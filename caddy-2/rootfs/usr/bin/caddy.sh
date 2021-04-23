@@ -145,7 +145,7 @@ main() {
 
     # Run Caddy
     bashio::log.info "Run Caddy..."
-    bashio::log.debug "'${CADDY_PATH}' run --config '${CONFIG_PATH}' '${ARGS}'"
-    "${CADDY_PATH}" run --config "${CONFIG_PATH}" "${ARGS}"
+    bashio::log.debug "'${CADDY_PATH}' run --config '${CONFIG_PATH}' '${ARGS[*]}'"
+    "${CADDY_PATH}" run --config "${CONFIG_PATH}" "${ARGS[@]}"
 }
 main "$@"
