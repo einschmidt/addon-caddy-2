@@ -116,7 +116,7 @@ main() {
     declare -a args=()
 
     for arg in $(bashio::config 'args|keys'); do
-        args+=( $(bashio::config "args[${arg}]") )
+        args+=( '$(bashio::config "args[${arg}]")' )
     done
 
     # Load custom environment variables
