@@ -113,7 +113,11 @@ main() {
 
     declare name
     declare value
-    ARGS=$(bashio::config 'args')
+    declare -a args=()
+
+    for arg in $(bashio::config 'args|keys'); do
+        args+=( $(bashio::config "args[${arg}]") )
+    done
 
     # Load custom environment variables
     for var in $(bashio::config 'env_vars|keys'); do
@@ -145,7 +149,7 @@ main() {
 
     # Run Caddy
     bashio::log.info "Run Caddy..."
-    bashio::log.debug "'${CADDY_PATH}' run --config '${CONFIG_PATH}' '${ARGS[*]}'"
-    "${CADDY_PATH}" run --config "${CONFIG_PATH}" "${ARGS[@]}"
+    bashio::log.debug "'${CADDY_PATH}' run --config '${CONFIG_PATH}' '${args[*]}'"
+    "${CADDY_PATH}" run --config "${CONFIG_PATH}" "${args[@]}"
 }
 main "$@"
