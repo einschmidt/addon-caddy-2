@@ -118,7 +118,7 @@ Defaults to `/share/caddy/Caddyfile` if not specified.
 Allows you to specify the path to a custom `caddy` binary.
 Defaults to `/share/caddy/caddy` if not specified.
 
-### Option: `caddy_upgrade'
+### Option: `caddy_upgrade`
 
 Upgrade a custom caddy binary and its plugins during startup. Set it to `true`
 to enable it, `false` otherwise.
