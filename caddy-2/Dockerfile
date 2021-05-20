@@ -8,7 +8,7 @@ RUN set -eux; \
     ;
 
 # https://github.com/caddyserver/caddy/releases
-ENV CADDY_VERSION 2.4.0
+ENV CADDY_VERSION 2.4.1
 
 # Install Caddy
 RUN set -eux; \
