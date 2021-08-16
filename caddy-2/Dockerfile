@@ -2,10 +2,16 @@ ARG BUILD_FROM
 # hadolint ignore=DL3006
 FROM $BUILD_FROM
 
-RUN set -eux; \
-  mkdir -p \
+RUN \
+  set -eux \
+  \
+  && mkdir -p \
     /data/caddy \
-    ;
+  \
+  && echo '@edge http://dl-cdn.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories \
+  \
+  && apk add --no-cache \
+    nss-tools@edge=3.69-r0
 
 # https://github.com/caddyserver/caddy/releases
 ENV CADDY_VERSION 2.4.3
