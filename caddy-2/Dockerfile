@@ -22,10 +22,10 @@ RUN \
   set -eux \
   \
   && BINARCH="${BUILD_ARCH}" \
-  && if [ "${BUILD_ARCH}" = "i386"]; then BINARCH="amd64"; fi \
-  && if [ "${BUILD_ARCH}" = "armhf"]; then BINARCH="armv6"; fi \
-  && if [ "${BUILD_ARCH}" = "armv7"]; then BINARCH="armv7"; fi \
-  && if [ "${BUILD_ARCH}" = "aarch64"]; then BINARCH="arm64"; fi \
+  && if [ "${BUILD_ARCH}" = "i386" ]; then BINARCH="amd64"; fi \
+  && if [ "${BUILD_ARCH}" = "armhf" ]; then BINARCH="armv6"; fi \
+  && if [ "${BUILD_ARCH}" = "armv7" ]; then BINARCH="armv7"; fi \
+  && if [ "${BUILD_ARCH}" = "aarch64" ]; then BINARCH="arm64"; fi \
   \
   && curl -J -L -o /tmp/caddy.tar.gz "https://github.com/caddyserver/caddy/releases/download/v${CADDY_VERSION}/caddy_${CADDY_VERSION}_linux_${BINARCH}.tar.gz" \
   && tar zxvf /tmp/caddy.tar.gz -C /usr/bin caddy \
