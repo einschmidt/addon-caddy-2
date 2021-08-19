@@ -17,20 +17,21 @@ RUN \
 ENV CADDY_VERSION 2.4.3
 
 # Install Caddy
-RUN set -eux; \
-  APKARCH="$(apk --print-arch)"; \
-  case "$APKARCH" in \
-    x86_64)  BINARCH='amd64' ;; \
-    armhf)   BINARCH='armv6' ;; \
-    armv7)   BINARCH='armv7' ;; \
-    aarch64) BINARCH='arm64' ;; \
-    *) echo >&2 "error: unsupported architecture ($APKARCH)"; exit 1 ;;\
-  esac; \
-    curl -J -L -o /tmp/caddy.tar.gz "https://github.com/caddyserver/caddy/releases/download/v${CADDY_VERSION}/caddy_${CADDY_VERSION}_linux_${BINARCH}.tar.gz"; \
-  tar zxvf /tmp/caddy.tar.gz -C /usr/bin caddy; \
-  chmod +x /usr/bin/caddy; \
-  rm -rf /tmp/caddy; \
-  caddy version
+ARG BUILD_ARCH=amd64
+RUN \
+  set -eux \
+  \
+  && BINARCH="${BUILD_ARCH}" \
+  && if [ "${BUILD_ARCH}" = "i386"]; then BINARCH="amd64"; fi \
+  && if [ "${BUILD_ARCH}" = "armhf"]; then BINARCH="armv6"; fi \
+  && if [ "${BUILD_ARCH}" = "armv7"]; then BINARCH="armv7"; fi \
+  && if [ "${BUILD_ARCH}" = "aarch64"]; then BINARCH="arm64"; fi \
+  \
+  && curl -J -L -o /tmp/caddy.tar.gz "https://github.com/caddyserver/caddy/releases/download/v${CADDY_VERSION}/caddy_${CADDY_VERSION}_linux_${BINARCH}.tar.gz" \
+  && tar zxvf /tmp/caddy.tar.gz -C /usr/bin caddy \
+  && chmod +x /usr/bin/caddy \
+  && rm -rf /tmp/caddy \
+  && caddy version
 
 # Copy root filesystem
 COPY rootfs /
