@@ -14,7 +14,7 @@ RUN \
     nss-tools@edge=3.69-r0
 
 # https://github.com/caddyserver/caddy/releases
-ENV CADDY_VERSION 2.4.4
+ENV CADDY_VERSION 2.4.5
 
 # Install Caddy
 ARG BUILD_ARCH=amd64
