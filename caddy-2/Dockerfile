@@ -11,7 +11,7 @@ RUN \
   && echo '@edge http://dl-cdn.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories \
   \
   && apk add --no-cache \
-    nss-tools@edge=3.69.1-r0
+    nss-tools@edge=3.72-r0
 
 # https://github.com/caddyserver/caddy/releases
 ENV CADDY_VERSION 2.4.6
