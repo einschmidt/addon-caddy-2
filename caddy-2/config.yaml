@@ -3,7 +3,7 @@ name: Caddy 2
 version: dev
 slug: caddy-2
 description: Open source web and proxy server with automatic HTTPS
-url: 'https://github.com/einschmidt/addon-caddy-2'
+url: "https://github.com/einschmidt/addon-caddy-2"
 arch:
   - armhf
   - armv7
@@ -11,9 +11,9 @@ arch:
   - aarch64
 startup: services
 map:
-  - 'share:rw'
+  - "share:rw"
   - config
-  - 'ssl:rw'
+  - "ssl:rw"
 host_network: true
 options:
   non_caddyfile_config:
@@ -41,4 +41,4 @@ schema:
       value: str
   log_level: list(trace|debug|info|notice|warning|error|fatal)
 environment:
-  LOG_FORMAT: '{LEVEL}: {MESSAGE}'
+  LOG_FORMAT: "{LEVEL}: {MESSAGE}"
