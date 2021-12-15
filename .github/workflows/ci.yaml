@@ -8,5 +8,3 @@ on:
 jobs:
   workflows:
     uses: einschmidt/workflows/.github/workflows/addon-ci.yaml@main
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
