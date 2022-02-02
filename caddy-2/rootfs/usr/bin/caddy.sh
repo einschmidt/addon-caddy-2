@@ -39,7 +39,8 @@ caddy_upgrade() {
         return 0
     fi
 
-    if [ -w ${CADDY_PATH} ]; then
+    # Check current Caddy version against latest rekease on Github before upgrade 
+    if [ -w ${CADDY_PATH} ] && [ $(${CADDY_PATH} version | awk '{print $1}') != $(curl -sL https://api.github.com/repos/caddyserver/caddy/releases/latest | jq -r '.tag_name') ]; then
         bashio::log.info "Initiate upgrade"
         "${CADDY_PATH}" upgrade
     else
