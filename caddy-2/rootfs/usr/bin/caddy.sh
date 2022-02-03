@@ -37,13 +37,15 @@ caddy_upgrade() {
     if ! ${CUSTOM_CADDY}; then
         bashio::log.info "Cannot upgrade Caddy as no custom binary has been found"
         return 0
-    fi
-
-    if [ -w ${CADDY_PATH} ]; then
+    elif ! [ -w ${CADDY_PATH} ]; then
+        bashio::log.info "Custom Caddy has been found but is not writable"
+        return 0
+    elif [ $(${CADDY_PATH} version | awk '{print $1}') == $(curl -sL https://api.github.com/repos/caddyserver/caddy/releases/latest | jq -r '.tag_name') ]; then
+        bashio::log.info "Custom Caddy uses the latest version"
+        return 0
+    else
         bashio::log.info "Initiate upgrade"
         "${CADDY_PATH}" upgrade
-    else
-        bashio::log.info "Custom Caddy has been found but is not writable"
     fi
 }
 
