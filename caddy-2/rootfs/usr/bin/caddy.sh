@@ -40,7 +40,7 @@ caddy_upgrade() {
     elif ! [ -w ${CADDY_PATH} ]; then
         bashio::log.info "Custom Caddy has been found but is not writable"
         return 0
-    elif [ $(${CADDY_PATH} version | awk '{print $1}') == $(curl -sL https://api.github.com/repos/caddyserver/caddy/releases/latest | jq -r '.tag_name') ]; then
+    elif [ "$(${CADDY_PATH} version | awk '{print $1}')" == "$(curl -sL https://api.github.com/repos/caddyserver/caddy/releases/latest | jq -r '.tag_name')" ]; then
         bashio::log.info "Custom Caddy uses the latest version"
         return 0
     else
