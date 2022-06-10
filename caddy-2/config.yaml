@@ -42,3 +42,4 @@ schema:
   log_level: list(trace|debug|info|notice|warning|error|fatal)
 environment:
   LOG_FORMAT: "{LEVEL}: {MESSAGE}"
+init: false
