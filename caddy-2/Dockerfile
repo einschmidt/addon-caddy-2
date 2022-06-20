@@ -1,6 +1,4 @@
-ARG BUILD_FROM
-# hadolint ignore=DL3006
-FROM $BUILD_FROM
+FROM ghcr.io/hassio-addons/base:12.2.0
 
 RUN \
   set -eux \
