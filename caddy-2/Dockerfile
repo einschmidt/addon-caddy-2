@@ -1,4 +1,4 @@
-FROM ghcr.io/hassio-addons/base:12.2.0
+FROM ghcr.io/hassio-addons/base:12.2.1
 
 RUN \
   set -eux \
