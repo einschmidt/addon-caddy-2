@@ -33,9 +33,17 @@ RUN \
 # Copy root filesystem
 COPY rootfs /
 
-# set up nsswitch.conf for Go's "netgo" implementation
-# - https://github.com/docker-library/golang/blob/1eb096131592bcbc90aa3b97471811c798a93573/1.14/alpine3.12/Dockerfile#L9
-RUN [ ! -e /etc/nsswitch.conf ] && echo 'hosts: files dns' > /etc/nsswitch.conf
+# ensure that nsswitch.conf is set up for Go's "netgo" implementation
+# - https://github.com/golang/go/blob/go1.19.3/src/net/conf.go#L227-L303
+# - docker run --rm debian grep '^hosts:' /etc/nsswitch.conf
+# Alpine 3.16 includes nsswitch.conf
+RUN set -eux \
+  \
+	&& if [ -e /etc/nsswitch.conf ]; then \
+		grep '^hosts: files dns' /etc/nsswitch.conf; \
+	else \
+		echo 'hosts: files dns' > /etc/nsswitch.conf; \
+	fi
 
 ENV XDG_CONFIG_HOME=/data
 ENV XDG_DATA_HOME=/ssl
