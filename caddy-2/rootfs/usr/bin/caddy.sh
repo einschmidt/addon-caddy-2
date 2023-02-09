@@ -103,11 +103,6 @@ caddy_fmt() {
         "${CADDY_PATH}" fmt --overwrite ${CONFIG_PATH}
     else
         bashio::log.info "Caddyfile has been found but is not writable"
-        bashio::log.info "Find the formatted output below"
-        bashio::log.info
-        bashio::log.info "= Caddyfile ========================================="
-        "${CADDY_PATH}" fmt ${CONFIG_PATH}
-        bashio::log.info "====================================================="
     fi
 }
 
