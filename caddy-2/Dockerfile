@@ -9,7 +9,7 @@ RUN \
     /data/caddy \
   \
   && apk add --no-cache \
-    nss-tools=3.85-r0
+    nss-tools=3.85-r1
 
 # https://github.com/caddyserver/caddy/releases
 ENV CADDY_VERSION 2.6.2
