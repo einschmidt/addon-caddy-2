@@ -12,7 +12,7 @@ RUN \
     nss-tools=3.91-r0
 
 # https://github.com/caddyserver/caddy/releases
-ENV CADDY_VERSION 2.7.2
+ENV CADDY_VERSION 2.7.3
 
 # Install Caddy
 ARG BUILD_ARCH=amd64
