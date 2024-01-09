@@ -13,7 +13,7 @@ RUN \
 
 # https://github.com/caddyserver/caddy/releases
 ENV CADDY_VERSION="v2.7.6"
-ENV CADDY_VERSION_NO_V=$(echo $CADDY_VERSION | sed 's/^v//')
+ENV CADDY_VERSION_NO_V="$(echo $CADDY_VERSION | sed 's/^v//')"
 
 # Install Caddy
 ARG BUILD_ARCH=amd64
