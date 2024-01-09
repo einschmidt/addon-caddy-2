@@ -17,7 +17,7 @@
       {
         "fileMatch": ["/Dockerfile$"],
         "matchStrings": [
-          "ARG CADDY_VERSION=[\"']?(?<currentValue>.+?)[\"']?\\s+"
+          "ARG CADDY_VERSION=[\"']?(?<=v)(?<currentValue>.+?)[\"']?\\s+"
         ],
         "datasourceTemplate": "github-releases",
         "depNameTemplate": "caddyserver/caddy"
