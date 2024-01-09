@@ -2,6 +2,9 @@ ARG BUILD_FROM
 # hadolint ignore=DL3006
 FROM $BUILD_FROM
 
+# Use bash as the default shell
+SHELL ["/bin/bash", "-c"]
+
 RUN \
   set -eux \
   \
