@@ -13,15 +13,16 @@
         "ARG BUILD_FROM=(?<depName>.*?):(?<currentValue>.*?)\\s+",
         "(aarch64|amd64|armhf|armv7|i386):\\s[\"']?(?<depName>.*?):(?<currentValue>.*?)[\"']?\\s"
       ],
-      "datasourceTemplate": "docker"  },
-      {
-        "fileMatch": ["/Dockerfile$"],
-        "matchStrings": [
-          "ARG CADDY_VERSION=[\"']?(?<=v)(?<currentValue>.+?)[\"']?\\s+"
-        ],
-        "datasourceTemplate": "github-releases",
-        "depNameTemplate": "caddyserver/caddy"
+      "datasourceTemplate": "docker"
     },
+    {
+      "fileMatch": ["/Dockerfile$"],
+      "matchStrings": [
+        "ARG CADDY_VERSION=[\"']?(?<currentValue>.+?)[\"']?\\s+"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "caddyserver/caddy"
+    },  
     {
       "fileMatch": ["/Dockerfile$"],
       "matchStringsStrategy": "any",
