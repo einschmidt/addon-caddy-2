@@ -22,7 +22,7 @@
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "caddyserver/caddy"
-    },  
+    },
     {
       "fileMatch": ["/Dockerfile$"],
       "matchStringsStrategy": "any",
