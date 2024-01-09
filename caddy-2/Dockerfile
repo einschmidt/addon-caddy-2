@@ -12,7 +12,8 @@ RUN \
     nss-tools=3.94-r0
 
 # https://github.com/caddyserver/caddy/releases
-ENV CADDY_VERSION="2.7.6"
+ENV CADDY_VERSION="v2.7.6"
+ENV CADDY_VERSION_NO_V=$(echo $CADDY_VERSION | sed 's/^v//')
 
 # Install Caddy
 ARG BUILD_ARCH=amd64
@@ -24,7 +25,7 @@ RUN \
   && if [ "${BUILD_ARCH}" = "armv7" ]; then BINARCH="armv7"; fi \
   && if [ "${BUILD_ARCH}" = "aarch64" ]; then BINARCH="arm64"; fi \
   \
-  && curl -J -L -o /tmp/caddy.tar.gz "https://github.com/caddyserver/caddy/releases/download/v${CADDY_VERSION}/caddy_${CADDY_VERSION}_linux_${BINARCH}.tar.gz" \
+  && curl -J -L -o /tmp/caddy.tar.gz "https://github.com/caddyserver/caddy/releases/download/${CADDY_VERSION}/caddy_${CADDY_VERSION_NO_V}_linux_${BINARCH}.tar.gz" \
   && tar zxvf /tmp/caddy.tar.gz -C /usr/bin caddy \
   && chmod +x /usr/bin/caddy \
   && rm -rf /tmp/caddy \
