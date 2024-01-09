@@ -16,7 +16,6 @@ ENV CADDY_VERSION="v2.7.6"
 
 # Install Caddy
 ARG BUILD_ARCH=amd64
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN \
   set -eux \
   \
@@ -25,7 +24,7 @@ RUN \
   && if [ "${BUILD_ARCH}" = "armv7" ]; then BINARCH="armv7"; fi \
   && if [ "${BUILD_ARCH}" = "aarch64" ]; then BINARCH="arm64"; fi \
   \
-  && curl -J -L -o /tmp/caddy.tar.gz "https://github.com/caddyserver/caddy/releases/download/${CADDY_VERSION}/caddy_$(echo $CADDY_VERSION | sed 's/^v//')_linux_${BINARCH}.tar.gz" \
+  && curl -J -L -o /tmp/caddy.tar.gz "https://github.com/caddyserver/caddy/releases/download/${CADDY_VERSION}/caddy_${CADDY_VERSION//v/}_linux_${BINARCH}.tar.gz" \
   && tar zxvf /tmp/caddy.tar.gz -C /usr/bin caddy \
   && chmod +x /usr/bin/caddy \
   && rm -rf /tmp/caddy \
