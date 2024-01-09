@@ -16,6 +16,7 @@ ENV CADDY_VERSION="v2.7.6"
 
 # Install Caddy
 ARG BUILD_ARCH=amd64
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN \
   set -eux \
   \
