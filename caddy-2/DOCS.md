@@ -12,7 +12,13 @@ If you have trouble you can follow the [official docs](https://home-assistant.io
 
 Then install the "Caddy 2" add-on.
 
-## Default Proxy Server setup
+## How to setup and configure the Caddy 2 add-on
+
+The Caddy 2 add-on supports multiple ways of setup, aiming to suit numerous environments and network setups.
+
+Each setup comes with increasing complexity.
+
+### Default Proxy Server setup (Simple)
 
 While Caddy 2 isn't provided with a Caddyfile, the addon will run as a proxy
 server for Home Assistant, using provided information from the add-on config,
@@ -21,17 +27,37 @@ including automatic HTTPS.
 **Note**: As soon as Caddy 2 finds a `Caddyfile`, the `non_caddyfile_config`
 settings will be ignored in favour of the Caddyfile.
 
-## Caddyfile setup
+#### Example configuration
 
-Using the [SSH][ssh] or [Samba][samba] add-ons, create the `/share/caddy`
-folder and place a Caddyfile at `/share/caddy/Caddyfile` (no extension),
-or specify the location of your Caddyfile using `config_path`. There's
-also access to the `/ssl` folder if you want to use certificates from
+**Note**: _Remember to restart the add-on when the configuration is changed._
+
+Example configuration for proxy forwarding yourdomain.com to Home Assistant
+without Caddyfile:
+
+```yaml
+non_caddyfile_config:
+  email: your@email.com
+  domain: mydomain.com
+  destination: localhost
+  port: 8123
+log_level: info
+args: []
+env_vars: []
+```
+
+**Note**: _These are just examples, don't copy and paste them! Create your own!_
+
+### Caddyfile setup (Intermediate)
+
+Using the [SSH][ssh] or [Samba][samba] add-ons, place your `Caddyfile` in the add-on configuration directory.
+The add-on will look for Caddyfile in this folder only.
+
+There'salso access to the `/ssl` folder if you want to use certificates from
 another add-on, or use this add-on to create certificates for other
 add-ons. Finally, this add-on uses Host networking so you can listen
 on any ports you need.
 
-## Caddyfile example
+#### Caddyfile example
 
 A very simple Caddyfile for serving a default Home Assistant installation
 could look like this.
@@ -47,36 +73,46 @@ yourdomain.com {
 }
 ```
 
-## Configuration
+#### Example Configuration
 
 **Note**: _Remember to restart the add-on when the configuration is changed._
 
-Example configuration for proxy forwarding yourdomain.com to Home Assistant
-without Caddyfile:
+Example configuration using and watching a Caddyfile located in the add-on configuration directory:
 
 ```yaml
-non_caddyfile_config:
-  email: your@email.com
-  domain: yourdomain.com
-  destination: localhost
-  port: 8123
-args: []
-env_vars: []
-log_level: info
-```
-
-Example configuration using and watching a Caddyfile located at a custom path:
-
-```yaml
-config_path: /config/caddy/Caddyfile
 non_caddyfile_config: {}
+log_level: info
 args:
   - "--watch"
 env_vars: []
-log_level: info
 ```
 
 **Note**: _These are just examples, don't copy and paste them! Create your own!_
+
+### Custom caddy binary setup (Advanced)
+
+Using the [SSH][ssh] or [Samba][samba] add-ons, place your `caddy` binary in the add-on configuration directory.
+The add-on will look for caddy binaries in this folder only.
+
+#### Example Configuration
+
+**Note**: _Remember to restart the add-on when the configuration is changed._
+
+Example configuration using custom caddy binary and Caddyfile, as well as watching a Caddyfile, located in the add-on configuration directory:
+
+```yaml
+non_caddyfile_config: {}
+log_level: info
+args:
+  - "--watch"
+env_vars: []
+caddy_upgrade: true
+caddy_fmt: true
+```
+
+**Note**: _These are just examples, don't copy and paste them! Create your own!_
+
+## Configuration
 
 ### Option: `non_caddyfile_config.email`
 
@@ -111,16 +147,6 @@ Defines the port of the upstream address.
 **Note**: This option will be used only for the default reverse proxy config,
 which applies when Caddy doesn't find any `Caddyfile` at `config_path`.
 
-### Option: `config_path`
-
-Allows you to specify the path to your Caddyfile.
-Defaults to `/share/caddy/Caddyfile` if not specified.
-
-### Option: `custom_binary_path`
-
-Allows you to specify the path to a custom `caddy` binary.
-Defaults to `/share/caddy/caddy` if not specified.
-
 ### Option: `caddy_upgrade`
 
 Automatically upgrades a custom caddy binary and its plugins to the latest version,
@@ -136,8 +162,7 @@ Enables/Disables the function to format or prettify a Caddyfile. Set it to
 `true` to enable it, `false` otherwise.
 Disabled by default.
 
-**Note**: The format function requires a Caddyfile in a writable folder. In case
-the file is not writable, formatting will be skipped.
+**Note**: The format function requires a Caddyfile.
 
 ### Option: `args`
 
@@ -205,9 +230,10 @@ You can build your own version of Caddy like described [here](https://caddyserve
 
 ### Install custom binary
 
-To use a custom binary, place the `caddy` file at `/share/caddy/caddy` or
-point to it with `custom_binary_path`. Restart the add-on to start using
+To use a custom binary, place the `caddy` binary file into the add-on configuration folder. Restart the add-on to start using
 the custom version.
+
+The add-on configuration folder can be found at `/addon_configs/<your addon's slug>_Caddy-2`.
 
 [ssh]: https://home-assistant.io/addons/ssh/
 [samba]: https://home-assistant.io/addons/samba/
