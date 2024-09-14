@@ -60,10 +60,8 @@ To use a Caddyfile, place the file in the add-on configuration directory. You ca
 The Caddyfile needs to be placed in the add-on's configuration directory, which can be found at:
 
 ```
-/addon_configs/<your addon's slug>_Caddy-2
+/addon_configs/c80c7555_caddy-2
 ```
-
-Replace `<your addon's slug>` with the specific identifier for your Caddy 2 add-on. This is where all configuration files related to the add-on are stored.
 
 ##### Accessing the Configuration Directory
 
@@ -231,10 +229,10 @@ To use a custom-built Caddy binary, follow these steps:
 The add-on configuration folder can be found at:
 
 ```
-/addon_configs/<your addon's slug>_Caddy-2
+/addon_configs/c80c7555_caddy-2
 ```
 
-Replace `<your addon's slug>` with the specific identifier for your Caddy 2 add-on. This is where you should place your custom `caddy` binary and any related configuration files.
+This is where you should place your custom `caddy` binary and any related configuration files.
 
 Once the add-on is restarted, Caddy will use the custom binary you've provided, allowing you to leverage any additional features or plugins included in your custom build.
 
