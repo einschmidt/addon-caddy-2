@@ -38,7 +38,7 @@ For a basic proxy setup, forwarding `yourdomain.com` to Home Assistant, use the 
 ```yaml
 non_caddyfile_config:
   email: your@email.com
-  domain: mydomain.com
+  domain: yourdomain.com
   destination: localhost
   port: 8123
 log_level: info
@@ -67,6 +67,7 @@ Replace `<your addon's slug>` with the specific identifier for your Caddy 2 add-
 ##### Accessing the Configuration Directory
 
 SSH: You can access the configuration directory via SSH by navigating to `/addon_configs/`.
+
 Samba: Alternatively, with the Samba add-on, you can access this folder from your network as a shared directory. Look for the `addon_configs` folder and locate the appropriate directory.
 
 #### Managing Certificates
