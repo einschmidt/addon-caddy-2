@@ -5,41 +5,40 @@
 #
 # Launch Caddy
 # ------------------------------------------------------------------------------
+ 
+
+# Prepare Caddy function to set custom Caddy path and check for custom Caddy 
+# binary at the specified path. If found, exports custom Caddy variables;
+# otherwise, uses the built-in Caddy binary path.
+# Finally, checks the Caddy version.
 prepare_caddy() {
     bashio::log.info 'Prepare Caddy...'
 
-    # Check for custom Caddy binary path config
-    if bashio::config.has_value 'custom_binary_path'; then
-        bashio::log.debug "Set custom Caddy binary path"
-        CADDY_PATH="$(bashio::config 'custom_binary_path')"
-        export CADDY_PATH
-    else
-        CADDY_PATH="/share/caddy/caddy"
-        export CADDY_PATH
-    fi
+    # Set custom Caddy path
+    CUSTOM_CADDY_PATH="/config/caddy"
 
-    # Check for custom Caddy binary at Caddy path
-    if bashio::fs.file_exists "${CADDY_PATH}"; then
-        bashio::log.info "Found custom Caddy at ${CADDY_PATH}"
+    # Check for custom Caddy binary at custom Caddy path
+    bashio::log.info "Checking path: ${CUSTOM_CADDY_PATH}"
+    if bashio::fs.file_exists "${CUSTOM_CADDY_PATH}"; then
+        bashio::log.info "Found custom Caddy binary at ${CUSTOM_CADDY_PATH}"
         export CUSTOM_CADDY=true
+        export CADDY_PATH="${CUSTOM_CADDY_PATH}"
     else
+        bashio::log.info "Use built-in Caddy"
         export CUSTOM_CADDY=false
         export CADDY_PATH="/usr/bin/caddy"
-        bashio::log.info "Use built-in Caddy"
     fi
 
     # Check caddy version
     "${CADDY_PATH}" version
 }
 
+# Upgrade Caddy function to upgrade Caddy to the latest version
 caddy_upgrade() {
     bashio::log.info 'Upgrade Caddy...'
 
     if ! ${CUSTOM_CADDY}; then
         bashio::log.info "Cannot upgrade Caddy as no custom binary has been found"
-        return 0
-    elif ! [ -w ${CADDY_PATH} ]; then
-        bashio::log.info "Custom Caddy has been found but is not writable"
         return 0
     elif [ "$(${CADDY_PATH} version | awk '{print $1}')" == "$(curl -sL https://api.github.com/repos/caddyserver/caddy/releases/latest | jq -r '.tag_name')" ]; then
         bashio::log.info "Custom Caddy uses the latest version"
@@ -53,25 +52,20 @@ caddy_upgrade() {
 prepare_caddyfile() {
     bashio::log.info 'Prepare Caddyfile...'
 
-    # Check for config path config
-    if bashio::config.has_value 'config_path'; then
-        bashio::log.debug "Set custom Caddyfile path"
-        CONFIG_PATH="$(bashio::config 'config_path')"
-        export CONFIG_PATH
-    else
-        CONFIG_PATH="/share/caddy/Caddyfile"
-        export CONFIG_PATH
-    fi
+    # Set custom Caddyfile path
+    CUSTOM_CADDYFILE_PATH="/config/Caddyfile"
     
     # Check for existing Caddyfile
-    if bashio::fs.file_exists "${CONFIG_PATH}"; then
-        bashio::log.info "Caddyfile found at ${CONFIG_PATH}"
+    if bashio::fs.file_exists "${CUSTOM_CADDYFILE_PATH}"; then
+        bashio::log.info "Caddyfile found at ${CUSTOM_CADDYFILE_PATH}"
+        export CONFIG_PATH=${CUSTOM_CADDYFILE_PATH}
         export CADDYFILE=true
     else
         bashio::log.info "No Caddyfile found"
         bashio::log.info "Use non_caddyfile_config"
         export CONFIG_PATH=/etc/caddy/Caddyfile
         export CADDYFILE=false
+
         non_caddyfile_config
     fi
 }

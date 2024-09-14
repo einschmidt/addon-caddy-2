@@ -11,9 +11,12 @@ arch:
   - aarch64
 startup: services
 map:
-  - "share:rw"
-  - config
-  - "ssl:rw"
+  - type: share
+    read_only: false
+  - type: addon_config
+    read_only: false
+  - type: ssl
+    read_only: false
 host_network: true
 options:
   non_caddyfile_config:
@@ -32,8 +35,6 @@ schema:
     port: port?
   caddy_upgrade: bool?
   caddy_fmt: bool?
-  config_path: str?
-  custom_binary_path: str?
   args:
     - str
   env_vars:
@@ -43,3 +44,5 @@ schema:
 environment:
   LOG_FORMAT: "{LEVEL}: {MESSAGE}"
 init: false
+breaking_versions:
+  - 2.0.0
