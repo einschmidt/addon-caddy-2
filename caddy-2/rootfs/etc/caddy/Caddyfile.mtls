@@ -1,0 +1,13 @@
+{
+    email {$EMAIL}
+}
+
+{$DOMAIN} {
+    tls {$MTLS_SERVER_CERT} {$MTLS_SERVER_KEY} {
+        client_auth {
+            mode require_and_verify
+            trusted_ca_cert_file {$MTLS_CA_CERT}
+        }
+    }
+    reverse_proxy {$DESTINATION}:{$PORT}
+}
