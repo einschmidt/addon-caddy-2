@@ -3,6 +3,7 @@
 ## 🚀 Quick Start
 
 ### Minimal Configuration
+
 ```yaml
 mtls:
   enabled: true
@@ -10,7 +11,7 @@ mtls:
     common_name: My Home CA
     email: ca@example.com
   server:
-    common_name: mydomain.com  # Must match your domain!
+    common_name: mydomain.com # Must match your domain!
     email: server@example.com
   clients:
     - name: my_phone
@@ -23,40 +24,45 @@ mtls:
 
 All certificates are stored in `/ssl/mtls/`:
 
-| File | Description |
-|------|-------------|
-| `mTLS-CA.crt` | CA certificate (can be shared) |
-| `mTLS-CA.key` | CA private key (keep secure!) |
-| `mTLS-server.crt` | Server certificate |
-| `mTLS-server.key` | Server private key |
+| File                     | Description                                     |
+| ------------------------ | ----------------------------------------------- |
+| `mTLS-CA.crt`            | CA certificate (can be shared)                  |
+| `mTLS-CA.key`            | CA private key (keep secure!)                   |
+| `mTLS-server.crt`        | Server certificate                              |
+| `mTLS-server.key`        | Server private key                              |
 | `mTLS-client-{name}.p12` | Client certificate bundle (distribute to users) |
 
 ## 💻 Client Certificate Installation
 
 ### Chrome/Edge (Desktop)
+
 1. Settings → Privacy and security → Security → Manage certificates
 2. Import → Select `.p12` file
 3. Enter password → OK
 4. Restart browser
 
 ### Firefox (Desktop)
+
 1. Settings → Privacy & Security → Certificates → View Certificates
 2. Your Certificates → Import
 3. Select `.p12` file → Enter password
 4. Restart browser
 
 ### Safari (macOS)
+
 1. Double-click `.p12` file
 2. Enter password in Keychain Access
 3. Restart Safari
 
 ### iOS
+
 1. Email `.p12` to yourself or AirDrop
 2. Tap file → Install
 3. Settings → General → VPN & Device Management
 4. Install profile → Enter password
 
 ### Android
+
 1. Transfer `.p12` to device
 2. Settings → Security → Install from storage
 3. Select file → Enter password → Name it
@@ -64,6 +70,7 @@ All certificates are stored in `/ssl/mtls/`:
 ## 🔧 Common Configurations
 
 ### Single User
+
 ```yaml
 mtls:
   enabled: true
@@ -79,6 +86,7 @@ mtls:
 ```
 
 ### Multiple Users
+
 ```yaml
 mtls:
   enabled: true
@@ -102,6 +110,7 @@ mtls:
 ```
 
 ### Enterprise Setup
+
 ```yaml
 mtls:
   enabled: true
@@ -136,7 +145,9 @@ mtls:
 ## 🔄 Certificate Management
 
 ### Adding a New User
+
 1. Add client to config:
+
 ```yaml
 clients:
   - name: new_user
@@ -144,59 +155,74 @@ clients:
     email: newuser@example.com
     p12_password: TheirPassword
 ```
+
 2. Restart addon
 3. Retrieve `/ssl/mtls/mTLS-client-new_user.p12`
 4. Send to user securely
 
 ### Removing a User
+
 1. Remove client from config
 2. Set `regenerate_clients: true`
 3. Restart addon
 4. Redistribute `.p12` files to remaining users
 
 ### Rotating All Certificates
+
 ```yaml
 mtls:
-  regenerate_ca: true      # Regenerates everything
+  regenerate_ca: true # Regenerates everything
   regenerate_server: true
   regenerate_clients: true
 ```
+
 After restart, set all back to `false` and distribute new client certs.
 
 ### Rotating Only Client Certificates
+
 ```yaml
 mtls:
-  regenerate_clients: true  # Only regenerates client certs
+  regenerate_clients: true # Only regenerates client certs
 ```
 
 ## 🐛 Troubleshooting
 
 ### Problem: Cannot access Home Assistant after enabling mTLS
+
 **Solution:** You need to install a client certificate
+
 1. Access `/ssl/mtls/` via SSH or Samba
 2. Download your `.p12` file
 3. Install in your browser (see installation steps above)
 
 ### Problem: Browser doesn't ask for certificate
+
 **Solution:** Certificate not installed properly
+
 1. Check browser's certificate manager
 2. Verify `.p12` file imported successfully
 3. Restart browser
 
 ### Problem: "Certificate not trusted" error
+
 **Solution:** Server certificate issue
+
 1. Verify `server.common_name` matches your domain exactly
 2. Check `/ssl/mtls/mTLS-server.crt` exists
 3. Check Caddy logs for errors
 
 ### Problem: Client certificate rejected
+
 **Solution:** Certificate mismatch
+
 1. Verify client cert signed by same CA
 2. Check if CA was regenerated (invalidates old certs)
 3. If CA regenerated, set `regenerate_clients: true`
 
 ### Problem: "Connection refused" after config change
+
 **Solution:** Check Caddy logs
+
 ```bash
 docker logs addon_xxx_caddy-2
 ```
@@ -204,28 +230,37 @@ docker logs addon_xxx_caddy-2
 ## 📊 Verification Steps
 
 ### 1. Check certificates exist
+
 ```bash
 ls -la /ssl/mtls/
 ```
+
 Should show: CA cert/key, server cert/key, client .p12 files
 
 ### 2. Verify certificate details
+
 ```bash
 openssl x509 -in /ssl/mtls/mTLS-server.crt -text -noout
 ```
+
 Check:
+
 - Subject CN matches domain
 - Issuer matches CA
 - Validity dates
 
 ### 3. Test client certificate
+
 ```bash
 openssl pkcs12 -info -in /ssl/mtls/mTLS-client-{name}.p12
 ```
+
 Enter password when prompted
 
 ### 4. Check Caddy configuration
+
 Look for these in logs:
+
 - "Running mTLS setup..."
 - "CA certificate generated successfully"
 - "Server certificate generated successfully"
@@ -253,21 +288,25 @@ Look for these in logs:
 ## 🎯 Use Cases
 
 ### Home Access Only
+
 - Generate one cert per family member
 - Install on all their devices
 - No password needed after cert install
 
 ### Multi-Location
+
 - Different certs for home/work/mobile
 - Easy to revoke if device lost
 - Granular access control
 
 ### IoT Integration
+
 - Embed cert in automation tools
 - Secure API access
 - No password authentication
 
 ### Remote Admin
+
 - Admin gets separate cert
 - Higher security for privileged access
 - Easy to audit access logs
@@ -275,21 +314,25 @@ Look for these in logs:
 ## 🔗 Related Commands
 
 ### View CA details
+
 ```bash
 openssl x509 -in /ssl/mtls/mTLS-CA.crt -text -noout
 ```
 
 ### View server cert details
+
 ```bash
 openssl x509 -in /ssl/mtls/mTLS-server.crt -text -noout
 ```
 
 ### Extract cert from P12
+
 ```bash
 openssl pkcs12 -in /ssl/mtls/mTLS-client-{name}.p12 -clcerts -nokeys -out cert.pem
 ```
 
 ### Test mTLS connection
+
 ```bash
 curl --cert cert.pem --key key.pem --cacert /ssl/mtls/mTLS-CA.crt https://yourdomain.com
 ```
@@ -326,7 +369,7 @@ mtls:
     locality: Your City
     organization: Your Org
     organizational_unit: Your Unit
-    common_name: YOUR_DOMAIN  # MUST MATCH DOMAIN ABOVE
+    common_name: YOUR_DOMAIN # MUST MATCH DOMAIN ABOVE
     email: server@yourdomain.com
 
   clients:

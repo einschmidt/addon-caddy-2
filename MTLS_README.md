@@ -5,6 +5,7 @@ This fork adds comprehensive mutual TLS (mTLS) support to the Caddy 2 Home Assis
 ## What's New
 
 ### mTLS Authentication
+
 - **Automated Certificate Management**: Automatic generation of CA, server, and client certificates
 - **Zero Manual Intervention**: All certificate operations are handled automatically
 - **Multiple Client Support**: Generate certificates for multiple users/devices
@@ -16,13 +17,17 @@ This fork adds comprehensive mutual TLS (mTLS) support to the Caddy 2 Home Assis
 ## Features
 
 ### Certificate Chain Generation
+
 The addon automatically generates a complete certificate chain:
+
 1. **CA Certificate** - Root certificate authority
 2. **Server Certificate** - Signed by CA, used by Caddy
 3. **Client Certificates** - Signed by CA, distributed to users
 
 ### Configuration Options
+
 All aspects of certificate generation are configurable:
+
 - Subject information (Country, State, Locality, Organization, etc.)
 - Common names for CA, server, and clients
 - Email addresses
@@ -30,6 +35,7 @@ All aspects of certificate generation are configurable:
 - Regeneration flags for certificate renewal
 
 ### Security Features
+
 - **ECC-based certificates** (prime256v1 curve) for enhanced security and performance
 - **Long validity period** (36500 days) to avoid frequent renewals
 - **SHA-256 signing** for cryptographic strength
@@ -65,6 +71,7 @@ log_level: info
 ### Accessing Client Certificates
 
 Client certificates are stored in `/ssl/mtls/` and can be accessed via:
+
 - SSH addon
 - Samba addon
 - File Editor addon
@@ -74,11 +81,13 @@ Files are named: `mTLS-client-{name}.p12`
 ### Installing Client Certificates
 
 **Desktop Browsers (Chrome/Edge/Firefox):**
+
 1. Import the `.p12` file via browser settings
 2. Enter the configured password
 3. Restart browser
 
 **Mobile (iOS/Android):**
+
 1. Transfer the `.p12` file to device
 2. Import via Settings → Security
 3. Enter password when prompted
@@ -113,6 +122,7 @@ Files are named: `mTLS-client-{name}.p12`
 ### Certificate Storage
 
 All certificates are stored in `/ssl/mtls/`:
+
 ```
 /ssl/mtls/
 ├── mTLS-CA.crt              # CA certificate
@@ -129,6 +139,7 @@ All certificates are stored in `/ssl/mtls/`:
 ### Automation
 
 The entire certificate generation process is fully automated:
+
 1. On addon start, if mTLS is enabled
 2. Check for existing certificates
 3. Generate missing certificates
@@ -140,33 +151,33 @@ The entire certificate generation process is fully automated:
 
 ### mTLS Options
 
-| Option | Type | Required | Default | Description |
-|--------|------|----------|---------|-------------|
-| `mtls.enabled` | bool | No | false | Enable/disable mTLS |
-| `mtls.regenerate_ca` | bool | No | false | Force CA regeneration |
-| `mtls.regenerate_server` | bool | No | false | Force server cert regeneration |
-| `mtls.regenerate_clients` | bool | No | false | Force client cert regeneration |
+| Option                    | Type | Required | Default | Description                    |
+| ------------------------- | ---- | -------- | ------- | ------------------------------ |
+| `mtls.enabled`            | bool | No       | false   | Enable/disable mTLS            |
+| `mtls.regenerate_ca`      | bool | No       | false   | Force CA regeneration          |
+| `mtls.regenerate_server`  | bool | No       | false   | Force server cert regeneration |
+| `mtls.regenerate_clients` | bool | No       | false   | Force client cert regeneration |
 
 ### Certificate Subject Fields
 
 Available for `mtls.ca.*`, `mtls.server.*`, and `mtls.clients[*].*`:
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `country` | string | Two-letter country code (US, UK, DE, etc.) |
-| `state` | string | State or province name |
-| `locality` | string | City name |
-| `organization` | string | Organization name |
-| `organizational_unit` | string | Department or unit |
-| `common_name` | string | CN (must match domain for server) |
-| `email` | email | Contact email address |
+| Field                 | Type   | Description                                |
+| --------------------- | ------ | ------------------------------------------ |
+| `country`             | string | Two-letter country code (US, UK, DE, etc.) |
+| `state`               | string | State or province name                     |
+| `locality`            | string | City name                                  |
+| `organization`        | string | Organization name                          |
+| `organizational_unit` | string | Department or unit                         |
+| `common_name`         | string | CN (must match domain for server)          |
+| `email`               | email  | Contact email address                      |
 
 ### Client-Specific Options
 
-| Option | Type | Required | Description |
-|--------|------|----------|-------------|
-| `name` | string | Yes | Unique client identifier |
-| `p12_password` | password | No | Password for P12 file |
+| Option         | Type     | Required | Description              |
+| -------------- | -------- | -------- | ------------------------ |
+| `name`         | string   | Yes      | Unique client identifier |
+| `p12_password` | password | No       | Password for P12 file    |
 
 ## Security Best Practices
 
@@ -182,16 +193,20 @@ Available for `mtls.ca.*`, `mtls.server.*`, and `mtls.clients[*].*`:
 ### Common Issues
 
 **Cannot access after enabling mTLS**
+
 - Install client certificate from `/ssl/mtls/`
 
 **Browser doesn't prompt for certificate**
+
 - Ensure certificate is properly installed in browser
 
 **Certificate not accepted**
+
 - Verify CA hasn't been regenerated (would invalidate all certs)
 - Check server common_name matches domain exactly
 
 **Certificate errors**
+
 - Ensure server cert common_name matches your domain
 - Verify client cert is signed by same CA as server
 

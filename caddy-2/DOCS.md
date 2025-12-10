@@ -380,12 +380,14 @@ The files will be named: `mTLS-client-{name}.p12` where `{name}` is the client n
 #### On Desktop Browsers
 
 **Chrome/Edge:**
+
 1. Go to Settings → Privacy and security → Security → Manage certificates
 2. Import the `.p12` file
 3. Enter the password you configured
 4. Restart the browser
 
 **Firefox:**
+
 1. Go to Settings → Privacy & Security → Certificates → View Certificates
 2. Click "Import"
 3. Select the `.p12` file
@@ -393,6 +395,7 @@ The files will be named: `mTLS-client-{name}.p12` where `{name}` is the client n
 5. Restart the browser
 
 **Safari (macOS):**
+
 1. Double-click the `.p12` file
 2. It will open Keychain Access
 3. Enter the password and select a keychain
@@ -401,12 +404,14 @@ The files will be named: `mTLS-client-{name}.p12` where `{name}` is the client n
 #### On Mobile Devices
 
 **iOS:**
+
 1. Email the `.p12` file to yourself or use AirDrop
 2. Tap the file to install
 3. Go to Settings → General → VPN & Device Management → Install Profile
 4. Enter the password and your device passcode
 
 **Android:**
+
 1. Transfer the `.p12` file to your device
 2. Go to Settings → Security → Install from storage
 3. Select the `.p12` file
@@ -445,18 +450,23 @@ yourdomain.com {
 ### Troubleshooting mTLS
 
 **Issue**: Browser shows "Certificate Error" or "Connection Refused"
+
 - **Solution**: Ensure the server's `common_name` matches your domain exactly
 
 **Issue**: Browser doesn't prompt for client certificate
+
 - **Solution**: Verify the client certificate is properly installed in your browser
 
 **Issue**: "Certificate not trusted" error
+
 - **Solution**: The CA certificate needs to be trusted. Install `mTLS-CA.crt` in your system's trusted certificate store
 
 **Issue**: Cannot access the Home Assistant after enabling mTLS
+
 - **Solution**: You need to install a client certificate. Access the `/ssl/mtls/` directory via SSH/Samba to retrieve your `.p12` file
 
 **Issue**: Client certificate is not being accepted
+
 - **Solution**: Check that the certificate hasn't expired and was signed by the same CA. If you regenerated the CA, you need to regenerate all client certificates too.
 
 ## Advanced Usage: Custom Binaries & Plugins
