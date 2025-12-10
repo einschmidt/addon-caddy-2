@@ -5,9 +5,9 @@
 #
 # Launch Caddy
 # ------------------------------------------------------------------------------
- 
 
-# Prepare Caddy function to set custom Caddy path and check for custom Caddy 
+
+# Prepare Caddy function to set custom Caddy path and check for custom Caddy
 # binary at the specified path. If found, exports custom Caddy variables;
 # otherwise, uses the built-in Caddy binary path.
 # Finally, checks the Caddy version.
@@ -54,7 +54,7 @@ prepare_caddyfile() {
 
     # Set custom Caddyfile path
     CUSTOM_CADDYFILE_PATH="/config/Caddyfile"
-    
+
     # Check for existing Caddyfile
     if bashio::fs.file_exists "${CUSTOM_CADDYFILE_PATH}"; then
         bashio::log.info "Caddyfile found at ${CUSTOM_CADDYFILE_PATH}"
@@ -63,7 +63,15 @@ prepare_caddyfile() {
     else
         bashio::log.info "No Caddyfile found"
         bashio::log.info "Use non_caddyfile_config"
-        export CONFIG_PATH=/etc/caddy/Caddyfile
+
+        # Choose Caddyfile based on mTLS configuration
+        if bashio::config.true 'mtls.enabled'; then
+            bashio::log.info "mTLS enabled - using mTLS Caddyfile template"
+            export CONFIG_PATH=/etc/caddy/Caddyfile.mtls
+        else
+            export CONFIG_PATH=/etc/caddy/Caddyfile
+        fi
+
         export CADDYFILE=false
 
         non_caddyfile_config
@@ -77,7 +85,7 @@ non_caddyfile_config() {
     DOMAIN=$(bashio::config 'non_caddyfile_config.domain')
     DESTINATION=$(bashio::config 'non_caddyfile_config.destination')
     PORT=$(bashio::config 'non_caddyfile_config.port')
-    
+
     export EMAIL
     export DOMAIN
     export DESTINATION
@@ -127,6 +135,12 @@ main() {
 
     # Prepare Caddy
     prepare_caddy
+
+    # Setup mTLS certificates
+    if bashio::config.true 'mtls.enabled'; then
+        bashio::log.info "Running mTLS setup..."
+        source /usr/bin/mtls-setup.sh
+    fi
 
     # Upgrade Caddy
     if bashio::config.true 'caddy_upgrade'; then

@@ -22,6 +22,28 @@ options:
     domain: mydomain.com
     destination: localhost
     port: 8123
+  mtls:
+    enabled: false
+    regenerate_ca: false
+    regenerate_server: false
+    regenerate_clients: false
+    ca:
+      country: US
+      state: State
+      locality: City
+      organization: My Organization
+      organizational_unit: IT
+      common_name: My CA
+      email: ca@example.com
+    server:
+      country: US
+      state: State
+      locality: City
+      organization: My Organization
+      organizational_unit: IT
+      common_name: mydomain.com
+      email: server@example.com
+    clients: []
   args: []
   env_vars: []
   log_level: info
@@ -31,6 +53,37 @@ schema:
     domain: str?
     destination: str?
     port: port?
+  mtls:
+    enabled: bool?
+    regenerate_ca: bool?
+    regenerate_server: bool?
+    regenerate_clients: bool?
+    ca:
+      country: str?
+      state: str?
+      locality: str?
+      organization: str?
+      organizational_unit: str?
+      common_name: str?
+      email: email?
+    server:
+      country: str?
+      state: str?
+      locality: str?
+      organization: str?
+      organizational_unit: str?
+      common_name: str?
+      email: email?
+    clients:
+      - name: str
+        country: str?
+        state: str?
+        locality: str?
+        organization: str?
+        organizational_unit: str?
+        common_name: str
+        email: email
+        p12_password: password?
   caddy_upgrade: bool?
   caddy_fmt: bool?
   args:
