@@ -139,6 +139,7 @@ main() {
     # Setup mTLS certificates
     if bashio::config.true 'mtls.enabled'; then
         bashio::log.info "Running mTLS setup..."
+        # shellcheck source=caddy-2/rootfs/usr/bin/mtls-setup.sh
         source /usr/bin/mtls-setup.sh
     fi
 
