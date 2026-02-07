@@ -1,4 +1,4 @@
-# Home Assistant Add-on: Caddy 2
+# Home Assistant App: Caddy 2
 
 Caddy 2 is a powerful, enterprise-grade, open-source web server with automatic HTTPS, designed for simplicity, security, and high performance. It is the go-to solution for handling everything from basic web hosting to complex reverse proxy setups in both personal and enterprise environments.
 

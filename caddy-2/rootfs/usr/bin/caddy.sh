@@ -1,7 +1,7 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
 # ==============================================================================
-# Home Assistant Add-on: Caddy 2
+# Home Assistant App: Caddy 2
 #
 # Launch Caddy
 # ------------------------------------------------------------------------------

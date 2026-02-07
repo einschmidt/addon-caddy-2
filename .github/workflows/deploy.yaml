@@ -3,17 +3,26 @@ name: Deploy
 
 # yamllint disable-line rule:truthy
 on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
   release:
     types:
       - published
-  workflow_run:
-    workflows: ["CI"]
-    #branches: [main]
-    types:
-      - completed
+
+permissions:
+  actions: read
+  contents: read
+  packages: write
+  security-events: write
 
 jobs:
-  workflows:
-    uses: einschmidt/workflows/.github/workflows/addon-deploy.yaml@main
+  ci:
+    uses: einschmidt/workflows/.github/workflows/app-ci.yaml@main
+
+  deploy:
+    needs: ci
+    uses: einschmidt/workflows/.github/workflows/app-deploy.yaml@main
     secrets:
       DISPATCH_TOKEN: ${{ secrets.DISPATCH_TOKEN }}
