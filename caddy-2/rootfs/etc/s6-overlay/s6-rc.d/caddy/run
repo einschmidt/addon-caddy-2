@@ -1,9 +1,9 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
 # ==============================================================================
-# Home Assistant Add-on: Caddy 2
+# Home Assistant App: Caddy 2
 # Runs Caddy
 # ==============================================================================
 
-# Run Add-on
+# Run App
 exec /usr/bin/caddy.sh

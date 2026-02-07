@@ -4,8 +4,12 @@ name: Lock
 # yamllint disable-line rule:truthy
 on:
   schedule:
-    - cron: "38 2 * * *"
+    - cron: "55 2 * * *"
   workflow_dispatch:
+
+permissions:
+  issues: write
+  pull-requests: write
 
 jobs:
   workflows:
